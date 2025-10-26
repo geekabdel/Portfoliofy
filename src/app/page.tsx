@@ -100,9 +100,26 @@ export default function Home() {
           </RevealFx>
         </Column>
       </Column>
-      <RevealFx translateY="16" delay={0.6}>
-        <Projects range={[1, 1]} />
-      </RevealFx>
+      {routes["/work"] && (
+        <Column fillWidth gap="24" marginBottom="l">
+          <Row fillWidth paddingRight="64">
+            <Line maxWidth={48} />
+          </Row>
+          <Row fillWidth gap="24" marginTop="40" s={{ direction: "column" }}>
+            <Row flex={1} paddingLeft="l" paddingTop="24">
+              <Heading as="h2" variant="display-strong-xs" wrap="balance">
+                Latest Work
+              </Heading>
+            </Row>
+            <Row flex={3} paddingX="20">
+              <Projects exclude={["automate-design-handovers-with-a-figma-to-code-pipeline"]} range={[1, 1]} />
+            </Row>
+          </Row>
+          <Row fillWidth paddingLeft="64" horizontal="end">
+            <Line maxWidth={48} />
+          </Row>
+        </Column>
+      )}
       {routes["/blog"] && (
         <Column fillWidth gap="24" marginBottom="l">
           <Row fillWidth paddingRight="64">
@@ -123,7 +140,96 @@ export default function Home() {
           </Row>
         </Column>
       )}
-      <Projects range={[2]} />
+      <Column fillWidth gap="24" marginBottom="l">
+        <Row fillWidth horizontal="center">
+          <Row gap="24" horizontal="center" style={{ flexWrap: 'wrap' }}>
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/magento/magento-original.svg" 
+              alt="Magento" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.simpleicons.org/prestashop/df0067" 
+              alt="Prestashop" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" 
+              alt="WordPress" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" 
+              alt="Docker" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" 
+              alt="Next.js" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" 
+              alt="React" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.simpleicons.org/laravel/ff2d20" 
+              alt="Laravel" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" 
+              alt="Flutter" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" 
+              alt="Dart" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" 
+              alt="JavaScript" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" 
+              alt="TypeScript" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" 
+              alt="PHP" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" 
+              alt="MySQL" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+            <img 
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" 
+              alt="PostgreSQL" 
+              height={48} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+            />
+          </Row>
+        </Row>
+      </Column>
       <Mailchimp />
     </Column>
   );

@@ -1,8 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
-import { Fade, Flex, Line, Row, ToggleButton } from "@once-ui-system/core";
+import { Fade, Flex, Line, Row, ToggleButton, SmartLink } from "@once-ui-system/core";
 
 import { routes, display, person, about, blog, work, gallery } from "@/resources";
 import { ThemeToggle } from "./ThemeToggle";
@@ -39,7 +40,22 @@ export const Header = () => {
         }}
       >
         <Row paddingLeft="12" fillWidth vertical="center" textVariant="body-default-s">
-          {display.location && <Row s={{ hide: true }}>{person.location}</Row>}
+          <SmartLink href="/" className={styles.logoContainer}>
+            <Image
+              src="/logo-light.png"
+              alt="Logo"
+              width={150}
+              height={60}
+              className={styles.logoLight}
+            />
+            <Image
+              src="/logo-dark.png"
+              alt="Logo"
+              width={150}
+              height={60}
+              className={styles.logoDark}
+            />
+          </SmartLink>
         </Row>
         <Row fillWidth horizontal="center">
           <Row
@@ -51,7 +67,7 @@ export const Header = () => {
             horizontal="center"
             zIndex={1}
           >
-            <Row gap="4" vertical="center" textVariant="body-default-s" suppressHydrationWarning>
+            <Row gap="4" vertical="center" textVariant="body-default-m" suppressHydrationWarning className={styles.navbarIcons}>
               {routes["/"] && (
                 <ToggleButton prefixIcon="home" href="/" selected={pathname === "/"} />
               )}
@@ -132,6 +148,22 @@ export const Header = () => {
                   </Row>
                 </>
               )}
+              <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              <Row s={{ hide: true }}>
+                <ToggleButton
+                  prefixIcon="email"
+                  href="/contact"
+                  label="Contact"
+                  selected={pathname === "/contact"}
+                />
+              </Row>
+              <Row hide s={{ hide: false }}>
+                <ToggleButton
+                  prefixIcon="email"
+                  href="/contact"
+                  selected={pathname === "/contact"}
+                />
+              </Row>
               {display.themeSwitcher && (
                 <>
                   <Line background="neutral-alpha-medium" vert maxHeight="24" />

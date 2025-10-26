@@ -8,6 +8,39 @@
     mask-size: 100% 100%;
 }
 
+.logoContainer {
+    display: flex !important;
+    align-items: center !important;
+    height: auto !important;
+    min-height: 60px !important;
+}
+
+.logoLight {
+    display: block !important;
+    height: 60px !important;
+    width: auto !important;
+    object-fit: contain !important;
+}
+
+.logoDark {
+    display: none !important;
+    height: 60px !important;
+    width: auto !important;
+    object-fit: contain !important;
+}
+
+:global([data-theme="dark"]) .logoLight {
+    display: none !important;
+}
+
+:global([data-theme="dark"]) .logoDark {
+    display: block !important;
+}
+
+.navbarIcons :global(button) :global([class*="prefixIcon"]) {
+    font-size: 1.1em !important;
+}
+
 @media (max-width: breakpoints.$s) {
     .position {
         top: auto;

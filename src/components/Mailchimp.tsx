@@ -15,6 +15,8 @@ function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T
 
 export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...flex }) => {
   const [email, setEmail] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [touched, setTouched] = useState<boolean>(false);
 
@@ -27,7 +29,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
     return emailPattern.test(email);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
 
@@ -38,7 +40,15 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
     }
   };
 
-  const debouncedHandleChange = debounce(handleChange, 2000);
+  const handleSubjectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSubject(e.target.value);
+  };
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
+  };
+
+  const debouncedHandleEmailChange = debounce(handleEmailChange, 2000);
 
   const handleBlur = () => {
     setTouched(true);
@@ -51,6 +61,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
 
   return (
     <Column
+      id="contact"
       overflow="hidden"
       fillWidth
       padding="xl"
@@ -104,7 +115,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
           color: mailchimp.effects.lines.color,
         }}
       />
-      <Column maxWidth="xs" horizontal="center">
+      <Column maxWidth="s" horizontal="center" fillWidth>
         <Heading marginBottom="s" variant="display-strong-xs">
           {newsletter.title}
         </Heading>
@@ -115,69 +126,78 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
       <form
         style={{
           width: "100%",
+          maxWidth: "600px",
           display: "flex",
           justifyContent: "center",
         }}
-        action={mailchimp.action}
-        method="post"
-        id="mc-embedded-subscribe-form"
-        name="mc-embedded-subscribe-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          console.log("Form submitted:", { email, subject, message });
+          // Add Supabase integration here
+        }}
       >
-        <Row
-          id="mc_embed_signup_scroll"
+        <Column
           fillWidth
-          maxWidth={24}
-          s={{ direction: "column" }}
           gap="8"
         >
           <Input
-            formNoValidate
-            id="mce-EMAIL"
-            name="EMAIL"
+            id="contact-email"
             type="email"
-            placeholder="Email"
+            placeholder="Your Email"
             required
+            value={email}
             onChange={(e) => {
               if (error) {
-                handleChange(e);
+                handleEmailChange(e);
               } else {
-                debouncedHandleChange(e);
+                debouncedHandleEmailChange(e);
               }
             }}
             onBlur={handleBlur}
             errorMessage={error}
           />
-          <div style={{ display: "none" }}>
-            <input
-              type="checkbox"
-              readOnly
-              name="group[3492][1]"
-              id="mce-group[3492]-3492-0"
-              value=""
-              checked
-            />
-          </div>
-          <div id="mce-responses" className="clearfalse">
-            <div className="response" id="mce-error-response" style={{ display: "none" }}></div>
-            <div className="response" id="mce-success-response" style={{ display: "none" }}></div>
-          </div>
-          <div aria-hidden="true" style={{ position: "absolute", left: "-5000px" }}>
-            <input
-              type="text"
-              readOnly
-              name="b_c1a5a210340eb6c7bff33b2ba_0462d244aa"
-              tabIndex={-1}
-              value=""
-            />
-          </div>
-          <div className="clear">
-            <Row height="48" vertical="center">
-              <Button id="mc-embedded-subscribe" value="Subscribe" size="m" fillWidth>
-                Subscribe
-              </Button>
-            </Row>
-          </div>
-        </Row>
+          <Input
+            id="contact-subject"
+            type="text"
+            placeholder="Subject"
+            required
+            value={subject}
+            onChange={handleSubjectChange}
+          />
+          <textarea
+            placeholder="Your Message"
+            required
+            value={message}
+            onChange={handleMessageChange}
+            rows={6}
+            style={{
+              width: "100%",
+              minHeight: "120px",
+              padding: "12px 16px",
+              borderRadius: "8px",
+              border: "1px solid hsl(var(--neutral-alpha-weak))",
+              background: "hsl(var(--page-background))",
+              color: "hsl(var(--neutral-on-page))",
+              fontFamily: "var(--font-body)",
+              fontSize: "14px",
+              lineHeight: "1.5",
+              resize: "vertical",
+              outline: "none",
+              transition: "border-color 0.2s",
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = "hsl(var(--brand-on-page))";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "hsl(var(--neutral-alpha-weak))";
+            }}
+          />
+          <Row height="48" vertical="center">
+            <Button type="submit" size="m" fillWidth>
+              Contact Us
+            </Button>
+          </Row>
+        </Column>
       </form>
     </Column>
   );

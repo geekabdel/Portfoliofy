@@ -2,20 +2,20 @@ import { About, Blog, Gallery, Home, Newsletter, Person, Social, Work } from "@/
 import { Line, Logo, Row, Text } from "@once-ui-system/core";
 
 const person: Person = {
-  firstName: "Selene",
-  lastName: "Yu",
-  name: `Selene Yu`,
-  role: "Design Engineer",
+  firstName: "Abdelhamid",
+  lastName: "MAAIDNI",
+  name: `ABDELHAMID MAAIDNI`,
+  role: "Web Developer",
   avatar: "/images/avatar.jpg",
-  email: "example@gmail.com",
-  location: "Asia/Jakarta", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
-  languages: ["English", "Bahasa"], // optional: Leave the array empty if you don't want to display languages
+  email: "geek.abdel@gmail.com",
+  location: "Morocco/Casablanca", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
+  languages: ["English", "Arabic", "French"], // optional: Leave the array empty if you don't want to display languages
 };
 
 const newsletter: Newsletter = {
   display: true,
-  title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: <>My weekly newsletter about creativity and engineering</>,
+  title: <>Contact Us</>,
+  description: <>Get in touch with us for any inquiries or questions</>,
 };
 
 const social: Social = [
@@ -51,7 +51,7 @@ const home: Home = {
   description: `Portfolio website showcasing my work as a ${person.role}`,
   headline: <>Building bridges between design and code</>,
   featured: {
-    display: true,
+    display: false,
     title: (
       <Row gap="12" vertical="center">
         <strong className="ml-4">Once UI</strong>{" "}
@@ -98,9 +98,10 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        Selene is a Jakarta-based design engineer with a passion for transforming complex challenges
-        into simple, elegant design solutions. Her work spans digital interfaces, interactive
-        experiences, and the convergence of design and technology.
+       I am a Web & Mobile Developer, passionate and dedicated to my work. With 7
+      years of experience as a professional Web & Mobile Developer, I have
+      acquired the skills and knowledge necessary to make your project a success. I
+      enjoy every step of the design process, from discussion to collaboration.
       </>
     ),
   },
@@ -109,9 +110,9 @@ const about: About = {
     title: "Work Experience",
     experiences: [
       {
-        company: "FLY",
-        timeframe: "2022 - Present",
-        role: "Senior Design Engineer",
+        company: "Acwady",
+        timeframe: "2023 - Present",
+        role: "IT Project Manager",
         achievements: [
           <>
             Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
@@ -133,9 +134,9 @@ const about: About = {
         ],
       },
       {
-        company: "Creativ3",
-        timeframe: "2018 - 2022",
-        role: "Lead Designer",
+        company: "TechTrend",
+        timeframe: "2023",
+        role: "Magento Developer",
         achievements: [
           <>
             Developed a design system that unified the brand across multiple platforms, improving
@@ -144,6 +145,18 @@ const about: About = {
           <>
             Led a cross-functional team to launch a new product line, contributing to a 15% increase
             in overall company revenue.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "TechTrend",
+        timeframe: "2023",
+        role: "Magento Developer",
+        achievements: [
+          <>
+            Developed a design system that unified the brand across multiple platforms, improving
+            design consistency by 40%.
           </>,
         ],
         images: [],
