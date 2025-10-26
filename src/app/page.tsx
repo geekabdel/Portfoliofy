@@ -150,6 +150,7 @@ export default function Home() {
               width={48}
               height={48} 
               style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              loading="lazy"
               unoptimized
             />
             <Image 

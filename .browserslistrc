@@ -1,0 +1,6 @@
+# Modern browsers only - supports ES2020+ features
+defaults
+not IE 11
+not dead
+not op_mini all
+maintained node versions
