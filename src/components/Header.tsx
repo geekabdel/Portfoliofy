@@ -69,7 +69,7 @@ export const Header = () => {
           >
             <Row gap="4" vertical="center" textVariant="body-default-m" suppressHydrationWarning className={styles.navbarIcons}>
               {routes["/"] && (
-                <ToggleButton prefixIcon="home" href="/" selected={pathname === "/"} />
+                <ToggleButton prefixIcon="home" href="/" label="Home" selected={pathname === "/"} />
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="24" />
               {routes["/about"] && (
@@ -86,6 +86,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="person"
                       href="/about"
+                      label="About"
                       selected={pathname === "/about"}
                     />
                   </Row>
@@ -105,6 +106,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="grid"
                       href="/work"
+                      label="Work"
                       selected={pathname.startsWith("/work")}
                     />
                   </Row>
@@ -124,6 +126,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="book"
                       href="/blog"
+                      label="Blog"
                       selected={pathname.startsWith("/blog")}
                     />
                   </Row>
@@ -143,6 +146,7 @@ export const Header = () => {
                     <ToggleButton
                       prefixIcon="gallery"
                       href="/gallery"
+                      label="Gallery"
                       selected={pathname.startsWith("/gallery")}
                     />
                   </Row>
@@ -161,6 +165,7 @@ export const Header = () => {
                 <ToggleButton
                   prefixIcon="email"
                   href="/contact"
+                  label="Contact"
                   selected={pathname === "/contact"}
                 />
               </Row>

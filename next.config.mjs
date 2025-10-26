@@ -33,9 +33,12 @@ const nextConfig = {
     silenceDeprecations: ["legacy-js-api"],
   },
   // Optimize CSS delivery
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
+  },
+  // Optimize CSS loading - inlines critical CSS
+  experimental: {
+    optimizeCss: true,
   },
 };
 

@@ -69,7 +69,7 @@ const home: Home = {
       <Logo
         dark
         icon="/trademarks/wordmark-dark.svg"
-        style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em" }}
+        style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em", width: '120px', height: '32px', maxWidth: '120px', minHeight: '32px' }}
       />
       , where I craft intuitive
       <br /> user experiences. After hours, I build my own projects.
