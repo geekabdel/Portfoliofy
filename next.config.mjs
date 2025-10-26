@@ -16,6 +16,16 @@ const nextConfig = {
         hostname: "www.google.com",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.jsdelivr.net",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.simpleicons.org",
+        pathname: "**",
+      },
     ],
   },
   sassOptions: {

@@ -11,6 +11,7 @@ import {
   Meta,
   Line,
 } from "@once-ui-system/core";
+import Image from "next/image";
 import { home, about, person, baseURL, routes } from "@/resources";
 import { Mailchimp } from "@/components";
 import { Projects } from "@/components/work/Projects";
@@ -143,89 +144,117 @@ export default function Home() {
       <Column fillWidth gap="24" marginBottom="l">
         <Row fillWidth horizontal="center">
           <Row gap="24" horizontal="center" style={{ flexWrap: 'wrap' }}>
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/magento/magento-original.svg" 
               alt="Magento" 
+              width={48}
               height={48} 
               style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.simpleicons.org/prestashop/df0067" 
               alt="Prestashop" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" 
               alt="WordPress" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" 
               alt="Docker" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" 
               alt="Next.js" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" 
               alt="React" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.simpleicons.org/laravel/ff2d20" 
               alt="Laravel" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" 
               alt="Flutter" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" 
               alt="Dart" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" 
               alt="JavaScript" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" 
               alt="TypeScript" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" 
               alt="PHP" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" 
               alt="MySQL" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
-            <img 
+            <Image 
               src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" 
               alt="PostgreSQL" 
+              width={48}
               height={48} 
-              style={{ filter: 'grayscale(100%) opacity(0.7)' }} 
+              style={{ filter: 'grayscale(100%) opacity(0.7)' }}
+              unoptimized
             />
           </Row>
         </Row>
