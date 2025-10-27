@@ -73,102 +73,44 @@ export const Header = () => {
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="24" />
               {routes["/about"] && (
-                <>
-                  <Row s={{ hide: true }}>
-                    <ToggleButton
-                      prefixIcon="person"
-                      href="/about"
-                      label={about.label}
-                      selected={pathname === "/about"}
-                    />
-                  </Row>
-                  <Row hide s={{ hide: false }}>
-                    <ToggleButton
-                      prefixIcon="person"
-                      href="/about"
-                      label="About"
-                      selected={pathname === "/about"}
-                    />
-                  </Row>
-                </>
+                <ToggleButton
+                  prefixIcon="person"
+                  href="/about"
+                  label="About"
+                  selected={pathname === "/about"}
+                />
               )}
               {routes["/work"] && (
-                <>
-                  <Row s={{ hide: true }}>
-                    <ToggleButton
-                      prefixIcon="grid"
-                      href="/work"
-                      label={work.label}
-                      selected={pathname.startsWith("/work")}
-                    />
-                  </Row>
-                  <Row hide s={{ hide: false }}>
-                    <ToggleButton
-                      prefixIcon="grid"
-                      href="/work"
-                      label="Work"
-                      selected={pathname.startsWith("/work")}
-                    />
-                  </Row>
-                </>
+                <ToggleButton
+                  prefixIcon="grid"
+                  href="/work"
+                  label="Work"
+                  selected={pathname.startsWith("/work")}
+                />
               )}
               {routes["/blog"] && (
-                <>
-                  <Row s={{ hide: true }}>
-                    <ToggleButton
-                      prefixIcon="book"
-                      href="/blog"
-                      label={blog.label}
-                      selected={pathname.startsWith("/blog")}
-                    />
-                  </Row>
-                  <Row hide s={{ hide: false }}>
-                    <ToggleButton
-                      prefixIcon="book"
-                      href="/blog"
-                      label="Blog"
-                      selected={pathname.startsWith("/blog")}
-                    />
-                  </Row>
-                </>
+                <ToggleButton
+                  prefixIcon="book"
+                  href="/blog"
+                  label="Blog"
+                  selected={pathname.startsWith("/blog")}
+                />
               )}
               {routes["/gallery"] && (
-                <>
-                  <Row s={{ hide: true }}>
-                    <ToggleButton
-                      prefixIcon="gallery"
-                      href="/gallery"
-                      label={gallery.label}
-                      selected={pathname.startsWith("/gallery")}
-                    />
-                  </Row>
-                  <Row hide s={{ hide: false }}>
-                    <ToggleButton
-                      prefixIcon="gallery"
-                      href="/gallery"
-                      label="Gallery"
-                      selected={pathname.startsWith("/gallery")}
-                    />
-                  </Row>
-                </>
+                <ToggleButton
+                  prefixIcon="gallery"
+                  href="/gallery"
+                  label="Gallery"
+                  selected={pathname.startsWith("/gallery")}
+                />
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="24" />
-              <Row s={{ hide: true }}>
-                <ToggleButton
-                  prefixIcon="email"
-                  href="/contact"
-                  label="Contact"
-                  selected={pathname === "/contact"}
-                />
-              </Row>
-              <Row hide s={{ hide: false }}>
-                <ToggleButton
-                  prefixIcon="email"
-                  href="/contact"
-                  label="Contact"
-                  selected={pathname === "/contact"}
-                />
-              </Row>
+              <ToggleButton
+                prefixIcon="email"
+                href="/contact"
+                label="Contact"
+                selected={pathname === "/contact"}
+              />
               {display.themeSwitcher && (
                 <>
                   <Line background="neutral-alpha-medium" vert maxHeight="24" />
