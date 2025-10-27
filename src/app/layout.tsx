@@ -14,9 +14,8 @@ import {
   RevealFx,
   SpacingToken,
 } from "@once-ui-system/core";
-import { Footer, Header, RouteGuard, Providers } from "@/components";
+import { Footer, Header, RouteGuard, Providers, AnalyticsWrapper } from "@/components";
 import { baseURL, effects, fonts, style, dataStyle, home } from "@/resources";
-import { Analytics } from "@vercel/analytics/next";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -47,6 +46,24 @@ export default async function RootLayout({
       )}
     >
       <head>
+        {/* Resource hints for faster CSS loading */}
+        <link rel="dns-prefetch" href="//vercel.app" />
+        <link rel="preconnect" href="https://vercel.app" crossOrigin="anonymous" />
+        {/* Critical inline styles for faster initial render */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            /* Prevent FOUC */
+            html { visibility: hidden; opacity: 0; }
+            html.loaded { visibility: visible; opacity: 1; transition: opacity 0.2s; }
+            body { margin: 0; padding: 0; min-height: 100vh; }
+            /* Critical layout styles */
+            .display-flex { display: flex; }
+            .fill-width { width: 100%; }
+            .position-relative { position: relative; }
+            .justify-center { justify-content: center; }
+            .align-center { align-items: center; }
+          `
+        }} />
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{
@@ -99,6 +116,9 @@ export default async function RootLayout({
                 } catch (e) {
                   console.error('Failed to initialize theme:', e);
                   document.documentElement.setAttribute('data-theme', 'dark');
+                } finally {
+                  // Mark HTML as loaded to prevent FOUC
+                  document.documentElement.classList.add('loaded');
                 }
               })();
             `,
@@ -166,7 +186,7 @@ export default async function RootLayout({
           </Flex>
           <Footer />
         </Column>
-        <Analytics />
+        <AnalyticsWrapper />
       </Providers>
     </Flex>
   );
