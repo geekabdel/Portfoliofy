@@ -67,12 +67,12 @@ export default function About() {
       />
       {about.tableOfContent.display && (
         <Column
+          className={styles.tableOfContents}
           left="0"
           style={{ top: "50%", transform: "translateY(-50%)" }}
           position="fixed"
           paddingLeft="24"
           gap="32"
-          s={{ hide: true }}
         >
           <TableOfContents structure={structure} about={about} />
         </Column>

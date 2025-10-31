@@ -1,4 +1,6 @@
-import { Row, IconButton, SmartLink, Text } from "@once-ui-system/core";
+"use client";
+
+import { Row, Icon, Text, SmartLink } from "@once-ui-system/core";
 import { person, social } from "@/resources";
 import styles from "./Footer.module.scss";
 
@@ -6,7 +8,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <Row as="footer" fillWidth padding="8" horizontal="center" s={{ direction: "column" }} style={{ minHeight: '120px' }}>
+    <Row as="footer" fillWidth padding="8" horizontal="center" s={{ direction: "column" }} style={{ minHeight: '120px', position: 'relative', zIndex: 100 }}>
       <Row
         className={styles.mobile}
         maxWidth="m"
@@ -20,22 +22,24 @@ export const Footer = () => {
           horizontal: "center",
           align: "center",
         }}
+        style={{ position: 'relative', zIndex: 1 }}
       >
         <Text variant="body-default-s" onBackground="neutral-strong" align="center">
           <Text onBackground="neutral-weak">© 2020 Abdelhamid Maaidni, All rights reserved.</Text>
         </Text>
-        <Row gap="16">
+        <Row gap="16" style={{ position: 'relative', zIndex: 2 }}>
           {social.map(
             (item) =>
               item.link && (
-                <IconButton
+                <SmartLink
                   key={item.name}
                   href={item.link}
-                  icon={item.icon}
-                  tooltip={item.name}
-                  size="s"
-                  variant="ghost"
-                />
+                  title={item.name}
+                  aria-label={item.name}
+                  style={{ position: 'relative', zIndex: 3, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <Icon name={item.icon} size="m" onBackground="neutral-weak" />
+                </SmartLink>
               ),
           )}
         </Row>

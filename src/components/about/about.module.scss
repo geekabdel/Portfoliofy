@@ -8,6 +8,13 @@
     }
 }
 
+// Hide table of contents on mobile and tablet
+.tableOfContents {
+    @media (max-width: breakpoints.$m) {
+        display: none !important;
+    }
+}
+
 @media (max-width: breakpoints.$s) {
     .textAlign {
         text-align: center;

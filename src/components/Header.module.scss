@@ -45,10 +45,205 @@
     .position {
         top: auto;
         bottom: var(--static-space-24);
+        padding: 4px !important;
     }
 
     .mask {
         transform: rotate(180deg);
         bottom: 0;
+    }
+
+    .logoContainer {
+        flex: 0 0 auto !important;
+        max-width: 80px !important;
+        min-height: 40px !important;
+    }
+
+    .logoLight,
+    .logoDark {
+        height: 32px !important;
+        width: auto !important;
+        max-width: 80px !important;
+    }
+
+    .navbarIcons {
+        gap: 1px !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        :global(button) {
+            padding: 2px 4px !important;
+            min-width: auto !important;
+            font-size: 0.7rem !important;
+            gap: 1px !important;
+            
+            :global([class*="prefixIcon"]) {
+                font-size: 0.85em !important;
+                margin-right: 1px !important;
+            }
+        }
+
+        :global([class*="Line"]) {
+            max-height: 20px !important;
+        }
+    }
+
+    // Hide desktop theme toggle and its container on mobile
+    .desktopThemeToggle {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+    }
+    
+    // Hide line separator before theme toggle on mobile
+    .desktopThemeSeparator {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .mobileThemeToggle {
+        position: fixed !important;
+        top: 12px !important;
+        right: 12px !important;
+        z-index: 100 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        
+        :global(button) {
+            padding: 8px !important;
+            border-radius: 8px !important;
+            background: var(--page-background) !important;
+            border: 1px solid var(--neutral-alpha-medium) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        }
+    }
+}
+
+// Desktop styles - only applies on desktop (above 768px)
+@media (min-width: 769px) {
+    .desktopThemeToggle {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: auto !important;
+        height: auto !important;
+    }
+}
+
+// Mobile theme toggle hidden on desktop by default
+.mobileThemeToggle {
+    display: none !important;
+}
+
+// Override for mobile screens - ensure desktop toggle is hidden
+@media (max-width: breakpoints.$s) {
+    .mobileThemeToggle {
+        display: flex !important;
+    }
+    
+    // Force hide desktop toggle on mobile (higher specificity)
+    .navbarIcons .desktopThemeToggle,
+    .navbarIcons > div.desktopThemeToggle {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -9999px !important;
+    }
+}
+
+// Extra small screens (like Galaxy A51 - 412px)
+@media (max-width: 480px) {
+    .position {
+        padding: 2px !important;
+    }
+
+    .logoContainer {
+        max-width: 60px !important;
+        min-height: 32px !important;
+    }
+
+    .logoLight,
+    .logoDark {
+        height: 24px !important;
+        max-width: 60px !important;
+    }
+
+    .navbarIcons {
+        gap: 0 !important;
+        overflow-x: visible !important;
+        flex-wrap: nowrap !important;
+        
+        :global(button) {
+            padding: 2px 2px !important;
+            font-size: 0.6rem !important;
+            min-width: auto !important;
+            white-space: nowrap !important;
+            gap: 0 !important;
+            
+            // Remove all spacing between icon and text
+            :global([class*="prefixIcon"]) {
+                font-size: 0.75em !important;
+                margin-right: 0 !important;
+                padding-right: 0 !important;
+                margin-left: 0 !important;
+                padding-left: 0 !important;
+            }
+            
+            // Remove spacing between icon and text label
+            :global([class*="label"]),
+            :global(span) {
+                margin-left: 0 !important;
+                padding-left: 0 !important;
+            }
+            
+            // Target any flex containers inside button
+            :global([style*="gap"]),
+            :global([class*="flex"]) {
+                gap: 0 !important;
+            }
+        }
+
+        :global([class*="Line"]) {
+            max-height: 14px !important;
+            width: 1px !important;
+            margin: 0 1px !important;
+            min-width: 1px !important;
+        }
+    }
+
+    .mobileThemeToggle {
+        top: 8px !important;
+        right: 8px !important;
+        
+        :global(button) {
+            padding: 6px !important;
+            width: 32px !important;
+            height: 32px !important;
+        }
     }
 }

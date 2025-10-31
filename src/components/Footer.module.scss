@@ -1,5 +1,27 @@
 @use "./breakpoints.scss" as breakpoints;
 
+:global(footer) {
+    pointer-events: auto !important;
+}
+
+.mobile {
+    pointer-events: auto !important;
+    
+    :global(a) {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        text-decoration: none !important;
+        
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+    
+    svg {
+        pointer-events: none !important;
+    }
+}
+
 @media (max-width: breakpoints.$s) {
     .mobile {
         text-align: center;

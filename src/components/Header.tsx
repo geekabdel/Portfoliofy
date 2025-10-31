@@ -25,6 +25,20 @@ export const Header = () => {
 
   return (
     <>
+      {/* Mobile theme toggle - fixed top right */}
+      {display.themeSwitcher && (
+        <div 
+          className={styles.mobileThemeToggle}
+          style={{
+            position: 'fixed',
+            top: '12px',
+            right: '12px',
+            zIndex: 1000,
+          }}
+        >
+          <ThemeToggle />
+        </div>
+      )}
       <Fade s={{ hide: true }} fillWidth position="fixed" height="80" zIndex={9} />
       <Fade
         hide
@@ -50,7 +64,7 @@ export const Header = () => {
           position: "fixed",
         }}
       >
-        <Row paddingLeft="12" fillWidth vertical="center" textVariant="body-default-s">
+        <Row paddingLeft="12" fillWidth vertical="center" textVariant="body-default-s" s={{ paddingLeft: "8", fillWidth: false, flex: "0 0 auto" }}>
           <SmartLink href="/" className={styles.logoContainer}>
             <Image
               src="/logo-light.png"
@@ -72,7 +86,7 @@ export const Header = () => {
             />
           </SmartLink>
         </Row>
-        <Row fillWidth horizontal="center">
+        <Row fillWidth horizontal="center" s={{ flex: "1 1 auto", minWidth: "0" }}>
           <Row
             background="page"
             border="neutral-alpha-weak"
@@ -81,8 +95,9 @@ export const Header = () => {
             padding="4"
             horizontal="center"
             zIndex={1}
+            s={{ padding: "2", maxWidth: "100%" }}
           >
-            <Row gap="4" vertical="center" textVariant="body-default-m" suppressHydrationWarning className={styles.navbarIcons}>
+            <Row gap="4" vertical="center" textVariant="body-default-m" suppressHydrationWarning className={styles.navbarIcons} s={{ gap: "1", textVariant: "body-default-s" }} style={{ overflow: 'visible' }}>
               {routes["/"] && (
                 <ToggleButton prefixIcon="home" href="/" label="Home" selected={pathChecks.isHome} />
               )}
@@ -132,14 +147,16 @@ export const Header = () => {
               />
               {display.themeSwitcher && (
                 <>
-                  <Line background="neutral-alpha-medium" vert maxHeight="24" />
-                  <ThemeToggle />
+                  <Line background="neutral-alpha-medium" vert maxHeight="24" s={{ hide: true }} className={styles.desktopThemeSeparator} />
+                  <div className={styles.desktopThemeToggle}>
+                    <ThemeToggle />
+                  </div>
                 </>
               )}
             </Row>
           </Row>
         </Row>
-        <Flex fillWidth horizontal="end" vertical="center">
+        <Flex fillWidth horizontal="end" vertical="center" s={{ display: "none" }}>
           <Flex
             paddingRight="12"
             horizontal="end"
