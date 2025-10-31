@@ -108,12 +108,16 @@ const about: About = {
         role: "IT Project Manager",
         achievements: [
           <>
-            Redesigned the UI/UX for the FLY platform, resulting in a 20% increase in user
-            engagement and 30% faster load times.
+            IT Manager at Acwady, leading a team of 5 developers and overseeing the entire project lifecycle, including planning, development, testing, and deployment.
           </>,
           <>
-            Spearheaded the integration of AI tools into design workflows, enabling designers to
-            iterate 50% faster.
+            Developed a fully customized Flutter application compatible with WordPress Woocommerce.
+          </>,
+          <>
+            Worked on Magento 2, including migration, module integration.
+          </>,
+          <>
+            Built a digital platform using WooCommerce and WordPress.
           </>,
         ],
         images: [
@@ -132,24 +136,42 @@ const about: About = {
         role: "Magento Developer",
         achievements: [
           <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
-          </>,
-          <>
-            Led a cross-functional team to launch a new product line, contributing to a 15% increase
-            in overall company revenue.
+            Developed and maintained Magento2 based eCommerce platforms from concept to deployment.
           </>,
         ],
         images: [],
       },
       {
-        company: "TechTrend",
-        timeframe: "2023",
-        role: "Magento Developer",
+        company: "HyperTech SA",
+        timeframe: "2022",
+        role: "Web Developer",
         achievements: [
           <>
-            Developed a design system that unified the brand across multiple platforms, improving
-            design consistency by 40%.
+            Developed and customized templates for various CMS and eCommerce
+            platforms, including WordPress, OpenCart, PrestaShop, and Magento,
+            to meet client needs and business goals.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "Ibtikarsoft SA",
+        timeframe: "2021",
+        role: "Web Developer",
+        achievements: [
+          <>
+            Built and maintained Laravel-based websites and landing pages, as well as managed and updated several WooCommerce sites to ensure performance, security, and functionality.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "HOST5G",
+        timeframe: "2020",
+        role: "Personal Project",
+        achievements: [
+          <>
+            Developed a personal project called HOST5G, a web hosting and domain management platform offering solutions for server deployment and management.
           </>,
         ],
         images: [],
@@ -161,12 +183,16 @@ const about: About = {
     title: "Studies",
     institutions: [
       {
-        name: "University of Jakarta",
-        description: <>Studied software engineering.</>,
+        name: "Bachelor's Degree - Software engineer",
+        description: <>National School of Applied Sciences<br />2020 - 2021 Khouribga, Morocco</>,
       },
       {
-        name: "Build the Future",
-        description: <>Studied online marketing and personal branding.</>,
+        name: "Diploma In Computer Network Techniques - OFPPT",
+        description: <>2013 - 2015 Oued Zem, Morocco</>,
+      },
+      {
+        name: "Baccalaureate in Physics",
+        description: <>Ibn tofail Highschool<br />2012 - 2013 Oued Zem, Morocco</>,
       },
     ],
   },
@@ -175,37 +201,8 @@ const about: About = {
     title: "Technical skills",
     skills: [
       {
-        title: "Figma",
-        description: (
-          <>Able to prototype in Figma with Once UI with unnatural speed.</>
-        ),
-        tags: [
-          {
-            name: "Figma",
-            icon: "figma",
-          },
-        ],
-        // optional: leave the array empty if you don't want to display images
-        images: [
-          {
-            src: "/images/projects/project-01/cover-02.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-          {
-            src: "/images/projects/project-01/cover-03.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
-          },
-        ],
-      },
-      {
-        title: "Next.js",
-        description: (
-          <>Building next gen apps with Next.js + Once UI + Supabase.</>
-        ),
+        title: "Frontend Development",
+        description: <></>,
         tags: [
           {
             name: "JavaScript",
@@ -216,20 +213,112 @@ const about: About = {
             icon: "nextjs",
           },
           {
+            name: "React",
+          },
+          {
+            name: "TypeScript",
+          },
+          {
+            name: "Tailwind",
+          },
+          {
+            name: "Flutter",
+          },
+          {
+            name: "Dart",
+          },
+        ],
+        images: [],
+      },
+      {
+        title: "Backend Development",
+        description: <></>,
+        tags: [
+          {
+            name: "PHP",
+          },
+          {
+            name: "Laravel",
+          },
+          {
+            name: "MySQL",
+          },
+          {
+            name: "PostgreSQL",
+          },
+          {
             name: "Supabase",
             icon: "supabase",
           },
-        ],
-        // optional: leave the array empty if you don't want to display images
-        images: [
           {
-            src: "/images/projects/project-01/cover-04.jpg",
-            alt: "Project image",
-            width: 16,
-            height: 9,
+            name: "REST API",
           },
         ],
-      },  
+        images: [],
+      },
+      {
+        title: "DevOps and Deployment",
+        description: <></>,
+        tags: [
+          {
+            name: "Docker",
+          },
+          {
+            name: "CI/CD",
+          },
+          {
+            name: "Web Panel",
+          },
+          {
+            name: "Vercel",
+          },
+        ],
+        images: [],
+      },
+      {
+        title: "Other Technologies",
+        description: <></>,
+        tags: [
+          {
+            name: "Magento",
+          },
+          {
+            name: "Prestashop",
+          },
+          {
+            name: "OpenCart",
+          },
+          {
+            name: "WordPress",
+          },
+          {
+            name: "WooCommerce",
+          },
+          {
+            name: "Postman",
+          },
+          {
+            name: "Scribe Doc",
+          },
+          {
+            name: "Jira",
+          },
+          {
+            name: "Git",
+          },
+          {
+            name: "GitHub",
+          },
+          {
+            name: "Figma",
+            icon: "figma",
+          },
+          {
+            name: "Photoshop",
+          },
+        ],
+        images: [],
+      },
     ],
   },
 };
