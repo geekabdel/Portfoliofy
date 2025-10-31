@@ -32,8 +32,7 @@ export default function Blog() {
         {blog.title}
       </Heading>
       <Column fillWidth flex={1} gap="40">
-        <Posts range={[2, 2]} thumbnail />
-        <Posts range={[3, 4]} columns="2" thumbnail direction="column" />
+        <Posts range={[1, 2]} columns="2" thumbnail direction="column" />
       </Column>
     </Column>
   );

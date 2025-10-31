@@ -41,25 +41,33 @@ import { Geist_Mono } from "next/font/google";
 const heading = Geist({
   variable: "--font-heading",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
+  preload: true,
 });
 
 const body = Geist({
   variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
+  preload: true,
 });
 
 const label = Geist({
   variable: "--font-label",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
+  preload: true,
 });
 
 const code = Geist_Mono({
   variable: "--font-code",
   subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
+  preload: true,
 });
 
 const fonts: FontsConfig = {

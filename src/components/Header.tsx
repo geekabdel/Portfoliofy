@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useMemo } from "react";
 
 import { Fade, Flex, Line, Row, ToggleButton, SmartLink } from "@once-ui-system/core";
 
@@ -11,6 +12,16 @@ import styles from "./Header.module.scss";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
+  
+  // Memoize pathname checks to prevent unnecessary recalculations
+  const pathChecks = useMemo(() => ({
+    isHome: pathname === "/",
+    isAbout: pathname === "/about",
+    isWork: pathname.startsWith("/work"),
+    isBlog: pathname.startsWith("/blog"),
+    isGallery: pathname.startsWith("/gallery"),
+    isContact: pathname === "/contact",
+  }), [pathname]);
 
   return (
     <>
@@ -47,6 +58,8 @@ export const Header = () => {
               width={150}
               height={60}
               className={styles.logoLight}
+              priority
+              fetchPriority="high"
             />
             <Image
               src="/logo-dark.png"
@@ -54,6 +67,8 @@ export const Header = () => {
               width={150}
               height={60}
               className={styles.logoDark}
+              priority
+              fetchPriority="high"
             />
           </SmartLink>
         </Row>
@@ -69,15 +84,17 @@ export const Header = () => {
           >
             <Row gap="4" vertical="center" textVariant="body-default-m" suppressHydrationWarning className={styles.navbarIcons}>
               {routes["/"] && (
-                <ToggleButton prefixIcon="home" href="/" label="Home" selected={pathname === "/"} />
+                <ToggleButton prefixIcon="home" href="/" label="Home" selected={pathChecks.isHome} />
               )}
-              <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              {routes["/"] && (routes["/about"] || routes["/work"] || routes["/blog"] || routes["/gallery"]) && (
+                <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              )}
               {routes["/about"] && (
                 <ToggleButton
                   prefixIcon="person"
                   href="/about"
                   label="About"
-                  selected={pathname === "/about"}
+                  selected={pathChecks.isAbout}
                 />
               )}
               {routes["/work"] && (
@@ -85,7 +102,7 @@ export const Header = () => {
                   prefixIcon="grid"
                   href="/work"
                   label="Work"
-                  selected={pathname.startsWith("/work")}
+                  selected={pathChecks.isWork}
                 />
               )}
               {routes["/blog"] && (
@@ -93,7 +110,7 @@ export const Header = () => {
                   prefixIcon="book"
                   href="/blog"
                   label="Blog"
-                  selected={pathname.startsWith("/blog")}
+                  selected={pathChecks.isBlog}
                 />
               )}
               {routes["/gallery"] && (
@@ -101,15 +118,17 @@ export const Header = () => {
                   prefixIcon="gallery"
                   href="/gallery"
                   label="Gallery"
-                  selected={pathname.startsWith("/gallery")}
+                  selected={pathChecks.isGallery}
                 />
               )}
-              <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              {(routes["/"] || routes["/about"] || routes["/work"] || routes["/blog"] || routes["/gallery"]) && (
+                <Line background="neutral-alpha-medium" vert maxHeight="24" />
+              )}
               <ToggleButton
                 prefixIcon="email"
                 href="/contact"
                 label="Contact"
-                selected={pathname === "/contact"}
+                selected={pathChecks.isContact}
               />
               {display.themeSwitcher && (
                 <>

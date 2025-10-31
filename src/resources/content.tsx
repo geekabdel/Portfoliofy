@@ -7,7 +7,7 @@ const person: Person = {
   name: `ABDELHAMID MAAIDNI`,
   role: "Web Developer",
   avatar: "/images/avatar.jpg",
-  email: "geek.abdel@gmail.com",
+  email: "geek.Abdel@gmail.com",
   location: "Africa/Casablanca", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
   languages: ["English", "Arabic", "French"], // optional: Leave the array empty if you don't want to display languages
 };
@@ -24,17 +24,17 @@ const social: Social = [
   {
     name: "GitHub",
     icon: "github",
-    link: "https://github.com/once-ui-system",
+    link: "https://github.com/geekabdel",
   },
   {
     name: "LinkedIn",
     icon: "linkedin",
-    link: "https://www.linkedin.com/company/once-ui/",
+    link: "https://www.linkedin.com/in/abdelhamidmaaidni/",
   },
   {
     name: "Instagram",
     icon: "instagram",
-    link: "https://www.instagram.com/your-instagram/",
+    link: "https://www.instagram.com/senior.abdel/",
   },
   {
     name: "Email",
@@ -49,7 +49,7 @@ const home: Home = {
   label: "Home",
   title: `${person.name}'s Portfolio`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Building bridges between design and code</>,
+  headline: <>Building modern web and mobile experiences that bring ideas to life.</>,
   featured: {
     display: false,
     title: (
@@ -65,14 +65,7 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm Selene, a design engineer at{" "}
-      <Logo
-        dark
-        icon="/trademarks/wordmark-dark.svg"
-        style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em", width: '120px', height: '32px', maxWidth: '120px', minHeight: '32px' }}
-      />
-      , where I craft intuitive
-      <br /> user experiences. After hours, I build my own projects.
+      Hi, I'm Abdelhamid Maaidni, a Web & Mobile Developer dedicated to crafting smooth, engaging digital experiences.
     </>
   ),
 };
@@ -81,7 +74,7 @@ const about: About = {
   path: "/about",
   label: "About",
   title: `About – ${person.name}`,
-  description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+  description: `Meet ${person.name}, ${person.role} from Morocco, Casablanca`,
   tableOfContent: {
     display: true,
     subItems: false,

@@ -46,6 +46,9 @@ export default async function RootLayout({
       )}
     >
       <head>
+        {/* Font preloading for faster font display */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Resource hints for faster CSS loading */}
         <link rel="dns-prefetch" href="//vercel.app" />
         <link rel="preconnect" href="https://vercel.app" crossOrigin="anonymous" />
