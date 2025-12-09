@@ -5,14 +5,20 @@ import { ProjectCard } from "@/components";
 interface ProjectsProps {
   range?: [number, number?];
   exclude?: string[];
+  related?: string[];
 }
 
-export function Projects({ range, exclude }: ProjectsProps) {
+export function Projects({ range, exclude, related }: ProjectsProps) {
   let allProjects = getPosts(["src", "app", "work", "projects"]);
 
-  // Exclude by slug (exact match)
-  if (exclude && exclude.length > 0) {
-    allProjects = allProjects.filter((post) => !exclude.includes(post.slug));
+  // If related projects are specified, show only those
+  if (related && related.length > 0) {
+    allProjects = allProjects.filter((post) => related.includes(post.slug));
+  } else {
+    // Exclude by slug (exact match)
+    if (exclude && exclude.length > 0) {
+      allProjects = allProjects.filter((post) => !exclude.includes(post.slug));
+    }
   }
 
   const sortedProjects = allProjects.sort((a, b) => {
