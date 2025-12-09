@@ -111,13 +111,10 @@ const about: About = {
             IT Manager at Acwady, leading a team of 5 developers and overseeing the entire project lifecycle, including planning, development, testing, and deployment.
           </>,
           <>
-            Developed a fully customized Flutter application compatible with WordPress Woocommerce.
+            Developed a fully customized Flutter application compatible with WordPress WooCommerce.
           </>,
           <>
-            Worked on Magento 2, including migration, module integration.
-          </>,
-          <>
-            Built a digital platform using WooCommerce and WordPress.
+            Worked on Magento 2, including migration, module integration, template integration, and template edits.
           </>,
         ],
         images: [
@@ -131,36 +128,12 @@ const about: About = {
         ],
       },
       {
-        company: "TechTrend",
-        timeframe: "2023",
-        role: "Magento Developer",
-        achievements: [
-          <>
-            Developed and maintained Magento2 based eCommerce platforms from concept to deployment.
-          </>,
-        ],
-        images: [],
-      },
-      {
-        company: "HyperTech SA",
-        timeframe: "2022",
-        role: "Web Developer",
-        achievements: [
-          <>
-            Developed and customized templates for various CMS and eCommerce
-            platforms, including WordPress, OpenCart, PrestaShop, and Magento,
-            to meet client needs and business goals.
-          </>,
-        ],
-        images: [],
-      },
-      {
         company: "Ibtikarsoft SA",
-        timeframe: "2021",
+        timeframe: "2020 - 2022",
         role: "Web Developer",
         achievements: [
           <>
-            Built and maintained Laravel-based websites and landing pages, as well as managed and updated several WooCommerce sites to ensure performance, security, and functionality.
+            Developed and customized templates for various CMS and eCommerce platforms, including WordPress, OpenCart, PrestaShop, and Magento, to meet client needs and business goals.
           </>,
         ],
         images: [],
@@ -172,6 +145,17 @@ const about: About = {
         achievements: [
           <>
             Developed a personal project called HOST5G, a web hosting and domain management platform offering solutions for server deployment and management.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "TechTrend",
+        timeframe: "2018 - 2019",
+        role: "Web Developer",
+        achievements: [
+          <>
+            Developed and maintained web applications using modern technologies such as HTML, CSS, JavaScript, Bootstrap, and jQuery.
           </>,
         ],
         images: [],
