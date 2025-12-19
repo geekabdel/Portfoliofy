@@ -1,0 +1,55 @@
+@media (max-width: 768px) {
+  .mobileFullBleed {
+    /* Cancels the root layout padding on mobile so the blog detail can go edge-to-edge */
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    /* Prevent tiny rounding overflows from creating page-level horizontal scroll */
+    overflow-x: clip;
+  }
+
+  .mobileFullWidth {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .mobilePostWidth90 {
+    max-width: 90% !important;
+    width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Guard against common MDX overflows on mobile */
+  .mobilePostWidth90 :global(img),
+  .mobilePostWidth90 :global(video),
+  .mobilePostWidth90 :global(svg),
+  .mobilePostWidth90 :global(canvas) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .mobilePostWidth90 :global(pre) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .mobilePostWidth90 :global(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .mobilePostWidth90 :global(p),
+  .mobilePostWidth90 :global(li) {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .hideOnMobile {
+    display: none !important;
+  }
+}
+
+
