@@ -19,6 +19,7 @@ import { getPosts } from "@/utils/utils";
 import { Metadata } from "next";
 import React from "react";
 import { Posts } from "@/components/blog/Posts";
+import styles from "./page.module.scss";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const posts = getPosts(["src", "app", "blog", "posts"]);
@@ -70,9 +71,16 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
 
   return (
     <Row fillWidth>
-      <Row maxWidth={12} m={{ hide: true }} />
+      <Row className={styles.hideOnMobile} maxWidth={12} m={{ hide: true }} />
       <Row fillWidth horizontal="center">
-        <Column as="section" maxWidth="m" horizontal="center" gap="l" paddingTop="24">
+        <Column
+          as="section"
+          className={styles.mobileFullBleed}
+          maxWidth="m"
+          horizontal="center"
+          gap="l"
+          paddingTop="24"
+        >
           <Schema
             as="blogPosting"
             baseURL={baseURL}
@@ -91,7 +99,7 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
               image: `${baseURL}${person.avatar}`,
             }}
           />
-          <Column maxWidth="s" gap="16" horizontal="center" align="center">
+          <Column className={styles.mobileFullWidth} maxWidth="s" gap="16" horizontal="center" align="center">
             <SmartLink href="/blog">
               <Text variant="label-strong-m">Blog</Text>
             </SmartLink>
@@ -121,11 +129,11 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
               marginBottom="8"
             />
           )}
-          <Column as="article" maxWidth="s">
+          <Column className={styles.mobilePostWidth90} as="article" maxWidth="s">
             <CustomMDX source={post.content} />
           </Column>
 
-          <Column fillWidth gap="40" horizontal="center" marginTop="40">
+          <Column fillWidth s={{ hide: true }} gap="40" horizontal="center" marginTop="40">
             <Line maxWidth="40" />
             <Heading as="h2" variant="heading-strong-xl" marginBottom="24">
               Recent posts
@@ -136,6 +144,7 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
         </Column>
       </Row>
       <Column
+        className={styles.hideOnMobile}
         maxWidth={12}
         paddingLeft="40"
         fitHeight
