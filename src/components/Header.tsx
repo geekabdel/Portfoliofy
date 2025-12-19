@@ -2,9 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
-import { Fade, Flex, Line, Row, ToggleButton, SmartLink } from "@once-ui-system/core";
+import { Fade, Flex, Line, Row, ToggleButton, SmartLink, Icon } from "@once-ui-system/core";
 
 import { routes, display, person, about, blog, work, gallery } from "@/resources";
 import { ThemeToggle } from "./ThemeToggle";
@@ -12,6 +12,7 @@ import styles from "./Header.module.scss";
 
 export const Header = () => {
   const pathname = usePathname() ?? "";
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Memoize pathname checks to prevent unnecessary recalculations
   const pathChecks = useMemo(() => ({
@@ -23,22 +24,171 @@ export const Header = () => {
     isContact: pathname === "/contact",
   }), [pathname]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      // Prevent scrolling on body
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+    } else {
+      // Re-enable scrolling
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  // Close mobile menu when pathname changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We intentionally want to run this when pathname changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Handle burger menu toggle
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(prev => !prev);
+  };
+
+  // Handle overlay click/key to close menu
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleOverlayKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  // Handle escape key to close menu
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMobileMenuOpen]);
+
   return (
     <>
-      {/* Mobile theme toggle - fixed top right */}
-      {display.themeSwitcher && (
-        <div 
-          className={styles.mobileThemeToggle}
-          style={{
-            position: 'fixed',
-            top: '12px',
-            right: '12px',
-            zIndex: 1000,
-          }}
-        >
-          <ThemeToggle />
+      {/* Mobile Burger Menu Button - fixed top left */}
+      <button
+        type="button"
+        className={styles.burgerButton}
+        onClick={toggleMobileMenu}
+        aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isMobileMenuOpen}
+        aria-controls="mobile-menu"
+      >
+        <div className={`${styles.burgerIcon} ${isMobileMenuOpen ? styles.burgerIconOpen : ''}`}>
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
         </div>
+      </button>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className={styles.mobileMenuOverlay}
+          onClick={handleOverlayClick}
+          onKeyDown={handleOverlayKeyDown}
+          role="button"
+          tabIndex={0}
+          aria-label="Close menu overlay"
+        />
       )}
+
+      {/* Mobile Menu */}
+      <aside 
+        id="mobile-menu"
+        className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <nav className={styles.mobileNav} aria-label="Mobile navigation">
+          {routes["/"] && (
+            <SmartLink 
+              href="/" 
+              className={`${styles.mobileNavItem} ${pathChecks.isHome ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Icon name="home" />
+              <span>Home</span>
+            </SmartLink>
+          )}
+          {routes["/about"] && (
+            <SmartLink 
+              href="/about" 
+              className={`${styles.mobileNavItem} ${pathChecks.isAbout ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Icon name="person" />
+              <span>About</span>
+            </SmartLink>
+          )}
+          {routes["/work"] && (
+            <SmartLink 
+              href="/work" 
+              className={`${styles.mobileNavItem} ${pathChecks.isWork ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Icon name="grid" />
+              <span>Work</span>
+            </SmartLink>
+          )}
+          {routes["/blog"] && (
+            <SmartLink 
+              href="/blog" 
+              className={`${styles.mobileNavItem} ${pathChecks.isBlog ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Icon name="book" />
+              <span>Blog</span>
+            </SmartLink>
+          )}
+          {routes["/gallery"] && (
+            <SmartLink 
+              href="/gallery" 
+              className={`${styles.mobileNavItem} ${pathChecks.isGallery ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Icon name="gallery" />
+              <span>Gallery</span>
+            </SmartLink>
+          )}
+          <SmartLink 
+            href="/contact" 
+            className={`${styles.mobileNavItem} ${pathChecks.isContact ? styles.active : ''}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <Icon name="email" />
+            <span>Contact</span>
+          </SmartLink>
+          
+          {display.themeSwitcher && (
+            <div className={styles.mobileMenuThemeToggle}>
+              <ThemeToggle />
+            </div>
+          )}
+        </nav>
+      </aside>
+
+      {/* Desktop Navigation */}
       <Fade s={{ hide: true }} fillWidth position="fixed" height="80" zIndex={9} />
       <Fade
         hide
@@ -60,11 +210,8 @@ export const Header = () => {
         padding="8"
         horizontal="center"
         data-border="rounded"
-        s={{
-          position: "fixed",
-        }}
       >
-        <Row paddingLeft="12" fillWidth vertical="center" textVariant="body-default-s" s={{ paddingLeft: "8", fillWidth: false, flex: "0 0 auto" }}>
+        <Row paddingLeft="12" vertical="center" textVariant="body-default-s" className={styles.desktopLogoContainer}>
           <SmartLink href="/" className={styles.logoContainer}>
             <Image
               src="/logo-light.png"
@@ -86,7 +233,7 @@ export const Header = () => {
             />
           </SmartLink>
         </Row>
-        <Row fillWidth horizontal="center" s={{ flex: "1 1 auto", minWidth: "0" }}>
+        <Row className={styles.desktopNavContainer}>
           <Row
             background="page"
             border="neutral-alpha-weak"
@@ -95,9 +242,8 @@ export const Header = () => {
             padding="4"
             horizontal="center"
             zIndex={1}
-            s={{ padding: "2", maxWidth: "100%" }}
           >
-            <Row gap="4" vertical="center" textVariant="body-default-m" suppressHydrationWarning className={styles.navbarIcons} s={{ gap: "1", textVariant: "body-default-s" }} style={{ overflow: 'visible' }}>
+            <Row gap="4" vertical="center" textVariant="body-default-m" suppressHydrationWarning className={styles.navbarIcons}>
               {routes["/"] && (
                 <ToggleButton prefixIcon="home" href="/" label="Home" selected={pathChecks.isHome} />
               )}
@@ -147,7 +293,7 @@ export const Header = () => {
               />
               {display.themeSwitcher && (
                 <>
-                  <Line background="neutral-alpha-medium" vert maxHeight="24" s={{ hide: true }} className={styles.desktopThemeSeparator} />
+                  <Line background="neutral-alpha-medium" vert maxHeight="24" className={styles.desktopThemeSeparator} />
                   <div className={styles.desktopThemeToggle}>
                     <ThemeToggle />
                   </div>
@@ -156,16 +302,6 @@ export const Header = () => {
             </Row>
           </Row>
         </Row>
-        <Flex fillWidth horizontal="end" vertical="center" s={{ display: "none" }}>
-          <Flex
-            paddingRight="12"
-            horizontal="end"
-            vertical="center"
-            textVariant="body-default-s"
-            gap="20"
-          >
-          </Flex>
-        </Flex>
       </Row>
     </>
   );
