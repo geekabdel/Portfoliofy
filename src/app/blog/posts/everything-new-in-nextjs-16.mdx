@@ -1,0 +1,78 @@
+---
+title: "Everything new in Next.js 16"
+summary: "Next.js 16 is now available, bringing Cache Components, Turbopack, and refined caching, now fully supported on Appwrite Sites."
+publishedAt: "2025-12-19"
+image: "/images/gallery/horizontal-2.jpg"
+tag: "Next.js"
+---
+
+Next.js 16 is here, and it brings one of the most polished releases the framework has seen in a while. Instead of chasing big rewrites, this version focuses on the fundamentals, faster builds, predictable caching, smarter routing, and better developer visibility.
+
+And if you're deploying on Appwrite Sites, you can start using Next.js 16 today. The latest release is fully supported, so you can build, test, and host your Next.js projects seamlessly on Appwrite's open-source infrastructure.
+
+Many of the features introduced in earlier betas are now stable and production-ready, giving developers more control and consistency across their workflows.
+
+Here's what's new, what's changed, and why it matters for anyone building with Next.js today.
+
+## Cache Components
+
+Caching in Next.js used to be a bit of a mystery. Sometimes your data was cached when you didn't want it to be; other times it wasn't cached at all. You'd deploy, see stale data, and wonder if the problem was in your code or in the framework.
+
+Next.js 16 fixes that by introducing **Cache Components**: A new, explicit caching model. Instead of Next.js deciding what to cache, you tell it what should be cached and when to revalidate.
+
+It's built on top of Partial Pre-rendering (PPR), which already blurred the line between static and dynamic pages. Together, they make rendering predictable and flexible.
+
+## Next.js DevTools MCP
+
+One of the more forward-looking additions in this release is **Next.js DevTools MCP**.
+
+It hooks into the Model Context Protocol (MCP), which lets AI tools and agents understand your project's context, your routing, caching, and rendering behaviour.
+
+**Why does that matter?** Because AI that actually knows how your app works can give better debugging help, clearer explanations, and smarter suggestions. Instead of just dumping stack traces, it can reason about what's happening under the hood.
+
+It's still early, but it points toward a future where your dev tools don't just react to errors, they understand them.
+
+## proxy.ts
+
+The old `middleware.ts` file is now `proxy.ts`. That's it. Same behaviour, better name.
+
+There has been a lot of confusion around how middlewares work in Next.js. These middlewares are not your typical middlewares. You're at the mercy of any network calls you make in these middlewares, as a single slow network call may block the initial load of your entire webpage, which is not ideal. Middlewares in Next.js are used to do something lightweight, for example, redirecting users based on the authentication cookies stored. Since the term middleware continued to cause issues, the Next.js team finally decided to rename it to **proxy** so that the purpose of using it is clear.
+
+## Logging Improvements
+
+Next.js 16 also improves logs, and not in a superficial "we added colours" way.
+
+Build and dev logs now show where time is spent, breaking down compilation, rendering, and optimization steps. So if your build suddenly feels slower, you can immediately tell which parts are to blame.
+
+It's a quiet but practical improvement that makes day-to-day development just a little less frustrating.
+
+## Turbopack Update
+
+Turbopack has officially graduated from beta and is now the **default bundler** for all new Next.js projects.
+
+It's fast, like **2–5× faster builds** and up to **10× faster Fast Refresh**. For large projects, filesystem caching (currently in beta) further cuts down on startup times by reusing compiled artifacts between sessions.
+
+You'll notice the difference most if you're in that constant build, refresh–iterate loop all day. It's less about benchmarks and more about getting back into flow faster.
+
+## Build Adapters API
+
+If you've ever had to deploy a Next.js app in an unusual environment, say, outside Vercel, this one's for you.
+
+**Build Adapters**, now in alpha, let you hook into the build process and modify it without forking the framework. It's especially handy for teams self-hosting or building custom pipelines.
+
+This update shows that Next.js is starting to take flexibility seriously for developers running the framework in different environments.
+
+## Conclusion
+
+Next.js 16 represents a maturation of the framework, focusing on developer experience and stability rather than flashy new features. Several key improvements are available:
+
+- **Cache Components** provide explicit, predictable caching control.
+- **DevTools MCP** enables AI-powered debugging with context-aware suggestions.
+- **proxy.ts** clarifies the purpose of middleware functionality.
+- **Logging improvements** offer better visibility into build performance.
+- **Turbopack** becomes the default bundler with significant speed improvements.
+- **Build Adapters** provide flexibility for custom deployment environments.
+
+These improvements compound over time, making Next.js 16 a solid foundation for production applications. Evaluate your project's needs to take full advantage of these enhancements.
+
+

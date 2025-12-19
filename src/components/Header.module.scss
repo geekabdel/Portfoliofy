@@ -8,6 +8,187 @@
     mask-size: 100% 100%;
 }
 
+// Burger Menu Button (Mobile Only)
+.burgerButton {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1002;
+    width: 48px;
+    height: 48px;
+    background: var(--page-background);
+    border: 1px solid var(--neutral-alpha-medium);
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+
+    &:hover {
+        background: var(--neutral-alpha-weak);
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.burgerIcon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 18px;
+    position: relative;
+
+    span {
+        display: block;
+        width: 100%;
+        height: 2.5px;
+        background: var(--neutral-on-background-strong);
+        border-radius: 3px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: center;
+    }
+
+    &.burgerIconOpen {
+        span:nth-child(1) {
+            transform: translateY(7.75px) rotate(45deg);
+        }
+
+        span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        span:nth-child(3) {
+            transform: translateY(-7.75px) rotate(-45deg);
+        }
+    }
+}
+
+// Mobile Menu Overlay
+.mobileMenuOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+// Mobile Menu
+.mobileMenu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    background: var(--page-background);
+    border-right: 1px solid var(--neutral-alpha-medium);
+    z-index: 1001;
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.2);
+    -webkit-overflow-scrolling: touch;
+
+    &.mobileMenuOpen {
+        left: 0;
+    }
+}
+
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    padding: 88px 24px 32px 24px;
+    gap: 4px;
+    min-height: 100%;
+}
+
+.mobileNavItem {
+    display: flex !important;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    color: var(--neutral-on-background-strong);
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 14px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+
+    :global(i) {
+        font-size: 22px;
+        width: 28px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
+    span {
+        flex: 1;
+    }
+
+    &:hover {
+        background: var(--neutral-alpha-weak);
+        transform: translateX(6px);
+    }
+
+    &:active {
+        transform: translateX(4px) scale(0.98);
+    }
+
+    &.active {
+        background: var(--brand-alpha-weak);
+        color: var(--brand-on-background-strong);
+        font-weight: 600;
+
+        :global(i) {
+            color: var(--brand-on-background-strong);
+        }
+    }
+}
+
+.mobileMenuThemeToggle {
+    margin-top: auto;
+    padding: 24px 20px;
+    border-top: 1px solid var(--neutral-alpha-medium);
+    display: flex;
+    justify-content: center;
+
+    :global(button) {
+        :global([class*="prefixIcon"]) {
+            font-size: 1.5em !important;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .logoContainer {
     display: flex !important;
     align-items: center !important;
@@ -41,99 +222,41 @@
     font-size: 1.1em !important;
 }
 
+
+// Mobile and Tablet - Hide desktop navigation, show burger menu
 @media (max-width: breakpoints.$s) {
+    // Hide the entire desktop navigation on mobile/tablet
     .position {
-        top: auto;
-        bottom: var(--static-space-24);
-        padding: 4px !important;
+        display: none !important;
     }
 
-    .mask {
-        transform: rotate(180deg);
-        bottom: 0;
+    .desktopLogoContainer {
+        display: none !important;
     }
 
-    .logoContainer {
-        flex: 0 0 auto !important;
-        max-width: 80px !important;
-        min-height: 40px !important;
+    .desktopNavContainer {
+        display: none !important;
     }
 
-    .logoLight,
-    .logoDark {
-        height: 32px !important;
-        width: auto !important;
-        max-width: 80px !important;
-    }
-
-    .navbarIcons {
-        gap: 1px !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        :global(button) {
-            padding: 2px 4px !important;
-            min-width: auto !important;
-            font-size: 0.7rem !important;
-            gap: 1px !important;
-            
-            :global([class*="prefixIcon"]) {
-                font-size: 0.85em !important;
-                margin-right: 1px !important;
-            }
-        }
-
-        :global([class*="Line"]) {
-            max-height: 20px !important;
-        }
-    }
-
-    // Hide desktop theme toggle and its container on mobile
     .desktopThemeToggle {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        width: 0 !important;
-        height: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        overflow: hidden !important;
-        pointer-events: none !important;
-    }
-    
-    // Hide line separator before theme toggle on mobile
-    .desktopThemeSeparator {
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
     }
 
-    .mobileThemeToggle {
-        position: fixed !important;
-        top: 12px !important;
-        right: 12px !important;
-        z-index: 100 !important;
+    .desktopThemeSeparator {
+        display: none !important;
+    }
+
+    // Show burger button and mobile menu on mobile/tablet
+    .burgerButton {
         display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        
-        :global(button) {
-            padding: 8px !important;
-            border-radius: 8px !important;
-            background: var(--page-background) !important;
-            border: 1px solid var(--neutral-alpha-medium) !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-        }
+    }
+
+    .mobileMenuOverlay {
+        display: block !important;
+    }
+
+    .mobileMenu {
+        display: block !important;
     }
 }
 
@@ -146,104 +269,21 @@
         width: auto !important;
         height: auto !important;
     }
-}
 
-// Mobile theme toggle hidden on desktop by default
-.mobileThemeToggle {
-    display: none !important;
-}
-
-// Override for mobile screens - ensure desktop toggle is hidden
-@media (max-width: breakpoints.$s) {
-    .mobileThemeToggle {
-        display: flex !important;
+    .desktopThemeSeparator {
+        display: block !important;
     }
-    
-    // Force hide desktop toggle on mobile (higher specificity)
-    .navbarIcons .desktopThemeToggle,
-    .navbarIcons > div.desktopThemeToggle {
+
+    // Explicitly hide mobile menu elements on desktop
+    .burgerButton {
         display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        width: 0 !important;
-        height: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        overflow: hidden !important;
-        pointer-events: none !important;
-        position: absolute !important;
-        left: -9999px !important;
-    }
-}
-
-// Extra small screens (like Galaxy A51 - 412px)
-@media (max-width: 480px) {
-    .position {
-        padding: 2px !important;
     }
 
-    .logoContainer {
-        max-width: 60px !important;
-        min-height: 32px !important;
+    .mobileMenu {
+        display: none !important;
     }
 
-    .logoLight,
-    .logoDark {
-        height: 24px !important;
-        max-width: 60px !important;
-    }
-
-    .navbarIcons {
-        gap: 0 !important;
-        overflow-x: visible !important;
-        flex-wrap: nowrap !important;
-        
-        :global(button) {
-            padding: 2px 2px !important;
-            font-size: 0.6rem !important;
-            min-width: auto !important;
-            white-space: nowrap !important;
-            gap: 0 !important;
-            
-            // Remove all spacing between icon and text
-            :global([class*="prefixIcon"]) {
-                font-size: 0.75em !important;
-                margin-right: 0 !important;
-                padding-right: 0 !important;
-                margin-left: 0 !important;
-                padding-left: 0 !important;
-            }
-            
-            // Remove spacing between icon and text label
-            :global([class*="label"]),
-            :global(span) {
-                margin-left: 0 !important;
-                padding-left: 0 !important;
-            }
-            
-            // Target any flex containers inside button
-            :global([style*="gap"]),
-            :global([class*="flex"]) {
-                gap: 0 !important;
-            }
-        }
-
-        :global([class*="Line"]) {
-            max-height: 14px !important;
-            width: 1px !important;
-            margin: 0 1px !important;
-            min-width: 1px !important;
-        }
-    }
-
-    .mobileThemeToggle {
-        top: 8px !important;
-        right: 8px !important;
-        
-        :global(button) {
-            padding: 6px !important;
-            width: 32px !important;
-            height: 32px !important;
-        }
+    .mobileMenuOverlay {
+        display: none !important;
     }
 }
