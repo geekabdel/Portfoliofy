@@ -111,7 +111,7 @@ const about: About = {
             IT Manager at Acwady, leading a team of 5 developers and overseeing the entire project lifecycle, including planning, development, testing, and deployment.
           </>,
           <>
-            Developed a fully customized Flutter application compatible with WordPress WooCommerce.
+            Developed a fully customized Flutter application for digital products.
           </>,
           <>
             Worked on Magento 2, including migration, module integration, template integration, and template edits.
