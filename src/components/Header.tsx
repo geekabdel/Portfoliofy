@@ -14,7 +14,7 @@ export const Header = () => {
   const pathname = usePathname() ?? "";
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Memoize pathname checks to prevent unnecessary recalculations,
+  // Memoize pathname checks to prevent unnecessary recalculations
   const pathChecks = useMemo(() => ({
     isHome: pathname === "/",
     isAbout: pathname === "/about",
@@ -27,21 +27,62 @@ export const Header = () => {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
+      // Prevent scrolling on body
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
     } else {
+      // Re-enable scrolling
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
     }
+    
     return () => {
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
     };
   }, [isMobileMenuOpen]);
 
   // Close mobile menu when pathname changes
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We intentionally want to run this when pathname changes
   useEffect(() => {
-    if (isMobileMenuOpen) {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Handle burger menu toggle
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(prev => !prev);
+  };
+
+  // Handle overlay click/key to close menu
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleOverlayKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
       setIsMobileMenuOpen(false);
     }
-  }, [pathname, isMobileMenuOpen]);
+  };
+
+  // Handle escape key to close menu
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMobileMenuOpen]);
 
   return (
     <>
@@ -49,14 +90,15 @@ export const Header = () => {
       <button
         type="button"
         className={styles.burgerButton}
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        aria-label="Toggle menu"
+        onClick={toggleMobileMenu}
+        aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         aria-expanded={isMobileMenuOpen}
+        aria-controls="mobile-menu"
       >
         <div className={`${styles.burgerIcon} ${isMobileMenuOpen ? styles.burgerIconOpen : ''}`}>
-          <span />
-          <span />
-          <span />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
         </div>
       </button>
 
@@ -64,52 +106,76 @@ export const Header = () => {
       {isMobileMenuOpen && (
         <div 
           className={styles.mobileMenuOverlay}
-          onClick={() => setIsMobileMenuOpen(false)}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape' || e.key === 'Enter') {
-              setIsMobileMenuOpen(false);
-            }
-          }}
+          onClick={handleOverlayClick}
+          onKeyDown={handleOverlayKeyDown}
           role="button"
           tabIndex={0}
-          aria-label="Close menu"
+          aria-label="Close menu overlay"
         />
       )}
 
       {/* Mobile Menu */}
-      <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
-        <nav className={styles.mobileNav}>
+      <aside 
+        id="mobile-menu"
+        className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}
+        aria-hidden={!isMobileMenuOpen}
+      >
+        <nav className={styles.mobileNav} aria-label="Mobile navigation">
           {routes["/"] && (
-            <SmartLink href="/" className={`${styles.mobileNavItem} ${pathChecks.isHome ? styles.active : ''}`}>
+            <SmartLink 
+              href="/" 
+              className={`${styles.mobileNavItem} ${pathChecks.isHome ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               <Icon name="home" />
               <span>Home</span>
             </SmartLink>
           )}
           {routes["/about"] && (
-            <SmartLink href="/about" className={`${styles.mobileNavItem} ${pathChecks.isAbout ? styles.active : ''}`}>
+            <SmartLink 
+              href="/about" 
+              className={`${styles.mobileNavItem} ${pathChecks.isAbout ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               <Icon name="person" />
               <span>About</span>
             </SmartLink>
           )}
           {routes["/work"] && (
-            <SmartLink href="/work" className={`${styles.mobileNavItem} ${pathChecks.isWork ? styles.active : ''}`}>
+            <SmartLink 
+              href="/work" 
+              className={`${styles.mobileNavItem} ${pathChecks.isWork ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               <Icon name="grid" />
               <span>Work</span>
             </SmartLink>
           )}
           {routes["/blog"] && (
-            <SmartLink href="/blog" className={`${styles.mobileNavItem} ${pathChecks.isBlog ? styles.active : ''}`}>
+            <SmartLink 
+              href="/blog" 
+              className={`${styles.mobileNavItem} ${pathChecks.isBlog ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               <Icon name="book" />
               <span>Blog</span>
             </SmartLink>
           )}
           {routes["/gallery"] && (
-            <SmartLink href="/gallery" className={`${styles.mobileNavItem} ${pathChecks.isGallery ? styles.active : ''}`}>
+            <SmartLink 
+              href="/gallery" 
+              className={`${styles.mobileNavItem} ${pathChecks.isGallery ? styles.active : ''}`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               <Icon name="gallery" />
               <span>Gallery</span>
             </SmartLink>
           )}
-          <SmartLink href="/contact" className={`${styles.mobileNavItem} ${pathChecks.isContact ? styles.active : ''}`}>
+          <SmartLink 
+            href="/contact" 
+            className={`${styles.mobileNavItem} ${pathChecks.isContact ? styles.active : ''}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             <Icon name="email" />
             <span>Contact</span>
           </SmartLink>
@@ -120,7 +186,7 @@ export const Header = () => {
             </div>
           )}
         </nav>
-      </div>
+      </aside>
 
       {/* Desktop Navigation */}
       <Fade s={{ hide: true }} fillWidth position="fixed" height="80" zIndex={9} />
@@ -145,7 +211,7 @@ export const Header = () => {
         horizontal="center"
         data-border="rounded"
       >
-        <Row paddingLeft="12" fillWidth vertical="center" textVariant="body-default-s" className={styles.desktopLogoContainer}>
+        <Row paddingLeft="12" vertical="center" textVariant="body-default-s" className={styles.desktopLogoContainer}>
           <SmartLink href="/" className={styles.logoContainer}>
             <Image
               src="/logo-light.png"
@@ -167,7 +233,7 @@ export const Header = () => {
             />
           </SmartLink>
         </Row>
-        <Row fillWidth horizontal="center" className={styles.desktopNavContainer}>
+        <Row className={styles.desktopNavContainer}>
           <Row
             background="page"
             border="neutral-alpha-weak"
