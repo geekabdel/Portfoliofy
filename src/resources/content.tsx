@@ -91,8 +91,8 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-       I am a Web & Mobile Developer, passionate and dedicated to my work. With 7
-      years of experience as a professional Web & Mobile Developer, I have
+       I am a Web Developer, passionate and dedicated to my work. With 7
+      years of experience as a professional Web Developer, I have
       acquired the skills and knowledge necessary to make your project a success. I
       enjoy every step of the design process, from discussion to collaboration.
       </>
@@ -108,7 +108,13 @@ const about: About = {
         role: "IT Project Manager",
         achievements: [
           <>
-            IT Manager at Acwady, leading a team of 5 developers and overseeing the entire project lifecycle, including planning, development, testing, and deployment.
+            <strong>IT Manager – Acwady</strong>
+            <br />
+            • Led a team of 5 developers to build and maintain a Next.js and Laravel platform
+            <br />
+            • Managed the full development lifecycle from planning to deployment
+            <br />
+            • Ensured code quality and timely delivery across frontend and backend teams
           </>,
           <>
             Developed a fully customized Flutter application for digital products.
