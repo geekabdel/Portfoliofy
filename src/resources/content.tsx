@@ -119,9 +119,6 @@ const about: About = {
           <>
             Developed a fully customized Flutter application for digital products.
           </>,
-          <>
-            Worked on Magento 2, including migration, module integration, template integration, and template edits.
-          </>,
         ],
         images: [
           // optional: leave the array empty if you don't want to display images
@@ -132,6 +129,17 @@ const about: About = {
             height: 9,
           },
         ],
+      },
+      {
+        company: "TechTrend",
+        timeframe: "2023",
+        role: "Web Developer",
+        achievements: [
+          <>
+            Worked on Magento 2, including migration, module integration, template integration, and template edits.
+          </>,
+        ],
+        images: [],
       },
       {
         company: "Ibtikarsoft SA",
@@ -156,7 +164,7 @@ const about: About = {
         images: [],
       },
       {
-        company: "TechTrend",
+        company: "TECH57",
         timeframe: "2018 - 2019",
         role: "Web Developer",
         achievements: [
@@ -235,10 +243,6 @@ const about: About = {
           },
           {
             name: "PostgreSQL",
-          },
-          {
-            name: "Supabase",
-            icon: "supabase",
           },
           {
             name: "REST API",
