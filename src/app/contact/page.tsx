@@ -1,14 +1,16 @@
-import { Column, Schema, Meta } from "@once-ui-system/core";
-import { home, person, baseURL } from "@/resources";
+import { Column, Heading, Schema } from "@once-ui-system/core";
+import { person, baseURL, about } from "@/resources";
 import { Mailchimp } from "@/components";
+import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
+
+const title = `Contact – ${person.name}`;
+const description = `Get in touch with ${person.name}, a web and mobile developer based in Casablanca.`;
 
 export async function generateMetadata() {
-  return Meta.generate({
-    title: `Contact – ${person.name}`,
-    description: `Get in touch with ${person.name}`,
-    baseURL: baseURL,
+  return pageMetadata({
+    title,
+    description,
     path: "/contact",
-    image: home.image,
   });
 }
 
@@ -18,16 +20,19 @@ export default function Contact() {
       <Schema
         as="webPage"
         baseURL={baseURL}
-        title={`Contact – ${person.name}`}
-        description={`Get in touch with ${person.name}`}
+        title={title}
+        description={description}
         path="/contact"
-        image={`/api/og/generate?title=${encodeURIComponent(`Contact – ${person.name}`)}`}
+        image={ogImage(title)}
         author={{
           name: person.name,
-          url: `${baseURL}/about`,
-          image: `${baseURL}${person.avatar}`,
+          url: siteUrl(about.path),
+          image: siteUrl(person.avatar),
         }}
       />
+      <Heading as="h1" variant="display-strong-l">
+        Contact
+      </Heading>
       <Mailchimp />
     </Column>
   );

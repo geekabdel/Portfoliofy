@@ -9,19 +9,19 @@ import {
   Background,
   Column,
   Flex,
-  Meta,
   opacity,
   RevealFx,
   SpacingToken,
 } from "@once-ui-system/core";
 import { Footer, Header, RouteGuard, Providers, AnalyticsWrapper } from "@/components";
-import { baseURL, effects, fonts, style, dataStyle, home } from "@/resources";
+import { SiteJsonLd } from "@/components/seo/SiteJsonLd";
+import { effects, fonts, style, dataStyle, home } from "@/resources";
+import { pageMetadata } from "@/utils/seo";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  return pageMetadata({
     title: home.title,
     description: home.description,
-    baseURL: baseURL,
     path: home.path,
     image: home.image,
   });
@@ -45,6 +45,7 @@ export default async function RootLayout({
         fonts.code.variable,
       )}
     >
+      <SiteJsonLd />
       <head>
         {/* Font preloading for faster font display */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

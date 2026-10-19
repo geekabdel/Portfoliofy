@@ -116,7 +116,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
         }}
       />
       <Column maxWidth="s" horizontal="center" fillWidth>
-        <Heading marginBottom="s" variant="display-strong-xs">
+        <Heading as="h2" marginBottom="s" variant="display-strong-xs">
           {newsletter.title}
         </Heading>
         <Text wrap="balance" marginBottom="l" variant="body-default-l" onBackground="neutral-weak">
@@ -144,6 +144,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             id="contact-email"
             type="email"
             placeholder="Your Email"
+            aria-label="Email"
             required
             value={email}
             onChange={(e) => {
@@ -160,11 +161,14 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             id="contact-subject"
             type="text"
             placeholder="Subject"
+            aria-label="Subject"
             required
             value={subject}
             onChange={handleSubjectChange}
           />
           <textarea
+            id="contact-message"
+            aria-label="Message"
             placeholder="Your Message"
             required
             value={message}
