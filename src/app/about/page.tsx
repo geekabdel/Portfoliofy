@@ -8,7 +8,6 @@ import {
   Media,
   Tag,
   Text,
-  Meta,
   Schema,
   Row,
 } from "@once-ui-system/core";
@@ -16,13 +15,12 @@ import { baseURL, about, person, social } from "@/resources";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 import React from "react";
+import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  return pageMetadata({
     title: about.title,
     description: about.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(about.title)}`,
     path: about.path,
   });
 }
@@ -58,11 +56,11 @@ export default function About() {
         title={about.title}
         description={about.description}
         path={about.path}
-        image={`/api/og/generate?title=${encodeURIComponent(about.title)}`}
+        image={ogImage(about.title)}
         author={{
           name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          url: siteUrl(about.path),
+          image: siteUrl(person.avatar),
         }}
       />
       {about.tableOfContent.display && (

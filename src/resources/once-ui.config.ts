@@ -11,10 +11,10 @@ import {
   SocialSharingConfig,
   StyleConfig,
 } from "@/types";
-import { home } from "./index";
+import { home, person } from "./content";
 
-// IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://demo.magic-portfolio.com";
+// Canonical site origin. Used by metadata, JSON-LD, sitemap, robots, and RSS.
+const baseURL: string = "https://maaidni.com";
 
 const routes: RoutesConfig = {
   "/": true,
@@ -192,18 +192,18 @@ const mailchimp: MailchimpConfig = {
 
 // default schema data
 const schema: SchemaConfig = {
-  logo: "",
-  type: "Organization",
-  name: "Once UI",
+  logo: person.avatar,
+  type: "Person",
+  name: person.name,
   description: home.description,
-  email: "lorant@once-ui.com",
+  email: person.email,
 };
 
-// social links
+// Public profiles referenced by Person JSON-LD.
 const sameAs: SameAsConfig = {
-  threads: "https://www.threads.com/@once_ui",
-  linkedin: "https://www.linkedin.com/company/once-ui/",
-  discord: "https://discord.com/invite/5EyAQ4eNdS",
+  github: "https://github.com/geekabdel",
+  linkedin: "https://www.linkedin.com/in/abdelhamidmaaidni/",
+  instagram: "https://www.instagram.com/senior.abdel/",
 };
 
 // social sharing configuration for blog posts

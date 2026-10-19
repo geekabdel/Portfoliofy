@@ -8,7 +8,6 @@ import {
   Badge,
   Row,
   Schema,
-  Meta,
   Line,
 } from "@once-ui-system/core";
 import Image from "next/image";
@@ -16,12 +15,12 @@ import { home, about, person, baseURL, routes } from "@/resources";
 import { Mailchimp } from "@/components";
 import { Projects } from "@/components/work/Projects";
 import { Posts } from "@/components/blog/Posts";
+import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  return pageMetadata({
     title: home.title,
     description: home.description,
-    baseURL: baseURL,
     path: home.path,
     image: home.image,
   });
@@ -36,11 +35,11 @@ export default function Home() {
         path={home.path}
         title={home.title}
         description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}`}
+        image={ogImage(home.title, home.image)}
         author={{
           name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          url: siteUrl(about.path),
+          image: siteUrl(person.avatar),
         }}
       />
       <Column fillWidth horizontal="center" gap="m">

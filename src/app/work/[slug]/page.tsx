@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { getPosts } from "@/utils/utils";
 import {
-  Meta,
   Schema,
   AvatarGroup,
   Button,
@@ -18,7 +17,7 @@ import {
 import { baseURL, about, person, work } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
 import { ScrollToHash, CustomMDX } from "@/components";
-import type { Metadata } from "next";
+import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 import { Projects } from "@/components/work/Projects";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
@@ -32,7 +31,7 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string | string[] }>;
-}): Promise<Metadata> {
+}) {
   const routeParams = await params;
   const slugPath = Array.isArray(routeParams.slug)
     ? routeParams.slug.join("/")
@@ -43,12 +42,15 @@ export async function generateMetadata({
 
   if (!post) return {};
 
-  return Meta.generate({
+  const cover = post.metadata.image || post.metadata.images?.[0];
+
+  return pageMetadata({
     title: post.metadata.title,
     description: post.metadata.summary,
-    baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
     path: `${work.path}/${post.slug}`,
+    image: cover,
+    type: "article",
+    publishedTime: post.metadata.publishedAt,
   });
 }
 
@@ -76,20 +78,18 @@ export default async function Project({
   return (
     <Column as="section" maxWidth="m" horizontal="center" gap="l">
       <Schema
-        as="blogPosting"
+        as="article"
         baseURL={baseURL}
         path={`${work.path}/${post.slug}`}
         title={post.metadata.title}
         description={post.metadata.summary}
         datePublished={post.metadata.publishedAt}
         dateModified={post.metadata.publishedAt}
-        image={
-          post.metadata.image || `/api/og/generate?title=${encodeURIComponent(post.metadata.title)}`
-        }
+        image={ogImage(post.metadata.title, post.metadata.image || post.metadata.images?.[0])}
         author={{
           name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
+          url: siteUrl(about.path),
+          image: siteUrl(person.avatar),
         }}
       />
       <Column maxWidth="s" gap="16" horizontal="center" align="center">
@@ -119,7 +119,7 @@ export default async function Project({
         </Row>
       </Row>
       {post.metadata.images.length > 0 && (
-        <Media priority aspectRatio="16 / 9" radius="m" alt="image" src={post.metadata.images[0]} />
+        <Media priority aspectRatio="16 / 9" radius="m" alt={post.metadata.title} src={post.metadata.images[0]} />
       )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
         <CustomMDX source={post.content} />

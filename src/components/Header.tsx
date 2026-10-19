@@ -215,7 +215,7 @@ export const Header = () => {
           <SmartLink href="/" className={styles.logoContainer}>
             <Image
               src="/logo-light.png"
-              alt="Logo"
+              alt="Abdelhamid Maaidni"
               width={150}
               height={60}
               className={styles.logoLight}
@@ -224,7 +224,7 @@ export const Header = () => {
             />
             <Image
               src="/logo-dark.png"
-              alt="Logo"
+              alt="Abdelhamid Maaidni"
               width={150}
               height={60}
               className={styles.logoDark}

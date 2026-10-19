@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { CustomMDX, ScrollToHash } from "@/components";
 import {
-  Meta,
   Schema,
   Column,
   Heading,
@@ -16,7 +15,7 @@ import {
 import { baseURL, about, blog, person } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
 import { getPosts } from "@/utils/utils";
-import { Metadata } from "next";
+import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 import React from "react";
 import { Posts } from "@/components/blog/Posts";
 import styles from "./page.module.scss";
@@ -32,7 +31,7 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string | string[] }>;
-}): Promise<Metadata> {
+}) {
   const routeParams = await params;
   const slugPath = Array.isArray(routeParams.slug)
     ? routeParams.slug.join("/")
@@ -43,12 +42,13 @@ export async function generateMetadata({
 
   if (!post) return {};
 
-  return Meta.generate({
+  return pageMetadata({
     title: post.metadata.title,
     description: post.metadata.summary,
-    baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
     path: `${blog.path}/${post.slug}`,
+    image: post.metadata.image,
+    type: "article",
+    publishedTime: post.metadata.publishedAt,
   });
 }
 
@@ -89,14 +89,11 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
             description={post.metadata.summary}
             datePublished={post.metadata.publishedAt}
             dateModified={post.metadata.publishedAt}
-            image={
-              post.metadata.image ||
-              `/api/og/generate?title=${post.metadata.title}`
-            }
+            image={ogImage(post.metadata.title, post.metadata.image)}
             author={{
               name: person.name,
-              url: `${baseURL}${about.path}`,
-              image: `${baseURL}${person.avatar}`,
+              url: siteUrl(about.path),
+              image: siteUrl(person.avatar),
             }}
           />
           <Column className={styles.mobileFullWidth} maxWidth="s" gap="16" horizontal="center" align="center">
