@@ -17,7 +17,11 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
   const [email, setEmail] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [company, setCompany] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [formError, setFormError] = useState<string>("");
+  const [sent, setSent] = useState<boolean>(false);
+  const [sending, setSending] = useState<boolean>(false);
   const [touched, setTouched] = useState<boolean>(false);
 
   const validateEmail = (email: string): boolean => {
@@ -130,16 +134,57 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
           display: "flex",
           justifyContent: "center",
         }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.log("Form submitted:", { email, subject, message });
-          // Add Supabase integration here
+        onSubmit={async (event) => {
+          event.preventDefault();
+          setTouched(true);
+          setSent(false);
+          setFormError("");
+
+          if (!validateEmail(email) || email === "") {
+            setError("Please enter a valid email address.");
+            return;
+          }
+          if (!subject.trim() || !message.trim()) {
+            setFormError("Subject and message are required.");
+            return;
+          }
+
+          setSending(true);
+          try {
+            const response = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, subject, message, company }),
+            });
+            const result = (await response.json()) as { ok?: boolean; error?: string };
+            if (!response.ok || !result.ok) {
+              setFormError(result.error || "The message could not be sent.");
+              return;
+            }
+            setEmail("");
+            setSubject("");
+            setMessage("");
+            setSent(true);
+          } catch {
+            setFormError("The message could not be sent. Check your connection and try again.");
+          } finally {
+            setSending(false);
+          }
         }}
       >
         <Column
           fillWidth
           gap="8"
         >
+          <input
+            name="company"
+            value={company}
+            onChange={(event) => setCompany(event.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ display: "none" }}
+          />
           <Input
             id="contact-email"
             type="email"
@@ -148,6 +193,7 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             required
             value={email}
             onChange={(e) => {
+              setEmail(e.target.value);
               if (error) {
                 handleEmailChange(e);
               } else {
@@ -196,9 +242,19 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
               e.target.style.borderColor = "hsl(var(--neutral-alpha-weak))";
             }}
           />
+          {sent && (
+            <Text variant="body-default-s" onBackground="neutral-weak">
+              Message sent. I will reply to your email.
+            </Text>
+          )}
+          {formError && (
+            <Text variant="body-default-s" onBackground="brand-medium">
+              {formError}
+            </Text>
+          )}
           <Row height="48" vertical="center">
-            <Button type="submit" size="m" fillWidth>
-              Contact Us
+            <Button type="submit" size="m" fillWidth disabled={sending}>
+              {sending ? "Sending..." : "Contact Us"}
             </Button>
           </Row>
         </Column>
