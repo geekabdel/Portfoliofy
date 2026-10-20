@@ -33,7 +33,7 @@ export default function Blog() {
         {blog.title}
       </Heading>
       <Column fillWidth flex={1} gap="40">
-        <Posts range={[1, 2]} columns="2" thumbnail direction="column" />
+        <Posts columns="2" thumbnail direction="column" />
       </Column>
     </Column>
   );
