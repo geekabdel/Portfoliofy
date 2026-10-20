@@ -3,9 +3,11 @@ import { Posts } from "@/components/blog/Posts";
 import { baseURL, blog, person, about } from "@/resources";
 import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 
+const metaTitle = "Blog | Abdelhamid Maaidni on Next.js and Web Development";
+
 export async function generateMetadata() {
   return pageMetadata({
-    title: blog.title,
+    title: metaTitle,
     description: blog.description,
     path: blog.path,
   });
@@ -17,10 +19,10 @@ export default function Blog() {
       <Schema
         as="webPage"
         baseURL={baseURL}
-        title={blog.title}
+        title={metaTitle}
         description={blog.description}
         path={blog.path}
-        image={ogImage(blog.title)}
+        image={ogImage(metaTitle)}
         author={{
           name: person.name,
           url: siteUrl(about.path),

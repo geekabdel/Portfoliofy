@@ -47,8 +47,9 @@ const home: Home = {
   path: "/",
   image: "/images/og/home.jpg",
   label: "Home",
-  title: `${person.name}'s Portfolio`,
-  description: `Portfolio of Abdelhamid Maaidni, a web and mobile developer in Casablanca. Projects in Next.js, Laravel, Flutter, and Magento, plus notes on web development.`,
+  title: "Abdelhamid Maaidni | Web, Mobile and Laravel Developer",
+  description:
+    "Web and mobile developer with 7 years of experience. I build Next.js, React, Laravel, and Flutter products, from planning and design through deployment.",
   headline: <>Building modern web and mobile experiences that bring ideas to life.</>,
   featured: {
     display: false,
@@ -74,7 +75,8 @@ const about: About = {
   path: "/about",
   label: "About",
   title: `About – ${person.name}`,
-  description: `Meet ${person.name}, ${person.role} from Morocco, Casablanca`,
+  description:
+    "With 7 years of experience, I build Next.js, React, Laravel, and Flutter products and lead projects from discussion and design through deployment.",
   tableOfContent: {
     display: true,
     subItems: false,
@@ -321,7 +323,8 @@ const blog: Blog = {
   path: "/blog",
   label: "Blog",
   title: `Blog – ${person.name}`,
-  description: `Articles by ${person.name} on Next.js, deployment, and building web applications.`,
+  description:
+    "Articles on building web and mobile apps with Next.js, React, Laravel, and Flutter, covering deployment, hosting, and shipping real client work.",
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
 };
@@ -330,7 +333,8 @@ const work: Work = {
   path: "/work",
   label: "Work",
   title: `Projects – ${person.name}`,
-  description: `Selected web and mobile projects by ${person.name}, including Next.js, Laravel, Flutter, and hosting work.`,
+  description:
+    "Web and mobile projects I have shipped: Next.js and Laravel platforms, Flutter apps, Magento stores, and hosting tools, from planning to deployment.",
   // Create new project pages by adding a new .mdx file to app/blog/posts
   // All projects will be listed on the /home and /work routes
 };

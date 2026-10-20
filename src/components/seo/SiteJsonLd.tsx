@@ -27,7 +27,7 @@ export function SiteJsonLd() {
         "@type": "WebSite",
         "@id": `${siteUrl("/")}#website`,
         url: siteUrl("/"),
-        name: home.title,
+        name: "Abdelhamid Maaidni",
         description: home.description,
         inLanguage: "en",
         publisher: { "@id": personId },
