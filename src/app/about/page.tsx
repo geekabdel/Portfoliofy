@@ -17,9 +17,11 @@ import styles from "@/components/about/about.module.scss";
 import React from "react";
 import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 
+const metaTitle = "About Abdelhamid Maaidni | Web and Mobile Developer";
+
 export async function generateMetadata() {
   return pageMetadata({
-    title: about.title,
+    title: metaTitle,
     description: about.description,
     path: about.path,
   });
@@ -53,10 +55,10 @@ export default function About() {
       <Schema
         as="webPage"
         baseURL={baseURL}
-        title={about.title}
+        title={metaTitle}
         description={about.description}
         path={about.path}
-        image={ogImage(about.title)}
+        image={ogImage(metaTitle)}
         author={{
           name: person.name,
           url: siteUrl(about.path),

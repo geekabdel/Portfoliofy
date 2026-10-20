@@ -3,8 +3,9 @@ import { person, baseURL, about } from "@/resources";
 import { Mailchimp } from "@/components";
 import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 
-const title = `Contact – ${person.name}`;
-const description = `Get in touch with ${person.name}, a web and mobile developer based in Casablanca.`;
+const title = "Contact Abdelhamid Maaidni | Web and Mobile Developer";
+const description =
+  "Have a project in mind? I build Next.js, React, Laravel, and Flutter products and can take it from planning and design through deployment for you.";
 
 export async function generateMetadata() {
   return pageMetadata({

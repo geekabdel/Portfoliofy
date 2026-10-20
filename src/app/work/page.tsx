@@ -3,9 +3,11 @@ import { baseURL, about, person, work } from "@/resources";
 import { Projects } from "@/components/work/Projects";
 import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 
+const metaTitle = "Projects by Abdelhamid Maaidni | Web and Mobile Work";
+
 export async function generateMetadata() {
   return pageMetadata({
-    title: work.title,
+    title: metaTitle,
     description: work.description,
     path: work.path,
   });
@@ -18,9 +20,9 @@ export default function Work() {
         as="webPage"
         baseURL={baseURL}
         path={work.path}
-        title={work.title}
+        title={metaTitle}
         description={work.description}
-        image={ogImage(work.title)}
+        image={ogImage(metaTitle)}
         author={{
           name: person.name,
           url: siteUrl(about.path),

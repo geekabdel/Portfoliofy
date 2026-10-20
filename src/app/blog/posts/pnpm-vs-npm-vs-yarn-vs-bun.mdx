@@ -1,0 +1,86 @@
+---
+title: "pnpm vs npm vs Yarn vs Bun"
+summary: "A simple look at npm, Yarn, pnpm, and Bun: how they install packages, where each one fits, and which to pick for a small app or a monorepo."
+publishedAt: "2026-10-20"
+image: "/images/gallery/horizontal-2.jpg"
+tag: "JavaScript"
+---
+
+## The speed test
+
+I tested all four on the same Next.js project, about 100 dependencies. These are cold installs, so nothing was cached yet:
+
+- **npm:** about 45 seconds
+- **Yarn:** about 30 seconds
+- **pnpm:** about 20 seconds
+- **Bun:** about 8 seconds
+
+Your numbers will change with the machine and the lockfile, but the pattern holds. Bun is the fastest, pnpm is close behind, Yarn is decent, and npm is the slow one.
+
+That speed is why people ask about the acquisition. In December 2025, Anthropic — the company behind Claude — acquired Bun. So they bought a package manager?
+
+No. The installer is only one part of Bun. It is a JavaScript runtime that also bundles code and runs tests. Claude Code ships as a Bun executable, which means the product already runs on Bun. Anthropic bought the runtime underneath their coding tool, not a faster `npm install`. Bun stays open source.
+
+Every JavaScript project needs a package manager. npm ships with Node.js, so most people start there. Yarn, pnpm, and Bun do the same job — install dependencies and run scripts — but they store files differently and feel different day to day.
+
+There is no single winner. A tool that feels great on a small app can be a poor fit for a large monorepo, and the other way around.
+
+## Which one to pick
+
+- **Small apps and scripts:** Bun is the fastest to install, if the project does not depend on a tool that only works with npm.
+- **Monorepos and shared code:** pnpm is the steady choice. It uses less disk space and its workspaces are clear.
+- **Teams that want the default:** npm. It is already installed with Node, and almost every tutorial assumes it.
+- **Projects already on Yarn:** stay on Yarn 4 unless you have a reason to move. Switching package managers is work.
+
+## npm
+
+npm is the default. If you install Node, you get npm. `package.json` and the `node_modules` folder are the model the rest of the ecosystem copied.
+
+That compatibility is the point. CI images, hosting panels, and older libraries expect npm. Installs are slower than the others, and each project keeps its own copy of every package, so disk use adds up when you have many repos. For a normal app, that rarely matters.
+
+Use npm when you want the fewest surprises, or when you are joining a codebase that already uses it.
+
+## Yarn
+
+Yarn started as a faster alternative to npm, with a lockfile and the same `node_modules` layout. That older release is Yarn Classic.
+
+Yarn 4 (Berry) is a different tool. It can skip `node_modules` and use Plug'n'Play, where packages are stored in a zip cache and resolved from a map. Installs get smaller and more repeatable. Some libraries still assume they can walk `node_modules`, so Plug'n'Play needs a compatibility setting on those projects. Yarn also has a plugin system if you want to extend the CLI.
+
+Use Yarn when the repo is already on it, or when you want Plug'n'Play and you can spend a little time on the packages that are not ready for it.
+
+## pnpm
+
+pnpm keeps one copy of each package version on your machine, in a global store. Projects then link to that store instead of downloading the same files again. A second project that needs the same React version barely uses any extra disk.
+
+Inside a project, pnpm is stricter than npm. A package can only import what it declared. That catches "it works because some other package happened to install it" bugs early.
+
+Workspaces are a natural fit: many apps and packages in one repo, with shared dependencies linked instead of copied. That is why pnpm shows up so often in monorepos.
+
+Use pnpm when you have more than one project on the same machine, or when you want installs that stay fast as the repo grows.
+
+## Bun
+
+Bun is a JavaScript runtime, and it includes its own package manager. Installs are very fast because the runtime, the bundler, and the installer are one program.
+
+The commands are familiar: you still have a `package.json` and a lockfile, and you still get a `node_modules` folder. Most npm packages install fine. The gaps show up with native addons, postinstall scripts, or tools that call the `npm` CLI by name.
+
+Use Bun for new apps and scripts where you control the stack. Check it in CI before you switch a large existing app.
+
+## What actually changes
+
+The lockfile is the important file in all four. Commit it. That is what makes the next install match the last one.
+
+Disk and speed come from how packages are stored:
+
+- npm and Yarn Classic copy packages into each project.
+- pnpm stores each version once and links it.
+- Yarn Plug'n'Play avoids the `node_modules` tree.
+- Bun does a normal `node_modules` install, just faster.
+
+Scripts in `package.json` work the same way everywhere. `dev`, `build`, and `test` do not care which manager ran them.
+
+## Moving a project
+
+Pick the manager, delete `node_modules`, remove the old lockfile, and install again. Read the new lockfile into git. If a dependency only works with npm, you will find out on that fresh install, not in production.
+
+You do not need to migrate a project that already installs cleanly. The gain is real on big repos and on machines full of Node projects. On a single small app, npm is enough.
