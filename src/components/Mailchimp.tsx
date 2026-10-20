@@ -149,16 +149,35 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             return;
           }
 
+          if (company.trim()) {
+            setEmail("");
+            setSubject("");
+            setMessage("");
+            setSent(true);
+            return;
+          }
+
           setSending(true);
           try {
-            const response = await fetch("/api/contact", {
+            const response = await fetch("https://formsubmit.co/ajax/abt3ch@gmail.com", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, subject, message, company }),
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                email,
+                subject,
+                message,
+                _replyto: email,
+                _subject: `Portfolio contact: ${subject}`,
+                _template: "table",
+                _captcha: "false",
+              }),
             });
-            const result = (await response.json()) as { ok?: boolean; error?: string };
-            if (!response.ok || !result.ok) {
-              setFormError(result.error || "The message could not be sent.");
+            const result = (await response.json()) as { success?: string; message?: string };
+            if (result.success !== "true") {
+              setFormError(result.message || "The message could not be sent.");
               return;
             }
             setEmail("");
