@@ -1,10 +1,56 @@
 ---
-title: "pnpm vs npm vs Yarn vs Bun"
-summary: "A simple look at npm, Yarn, pnpm, and Bun: how they install packages, where each one fits, and which to pick for a small app or a monorepo."
+title: "pnpm vs npm vs Yarn vs Bun: Which One to Use in 2026"
+summary: "pnpm vs npm vs Yarn vs Bun compared on install speed, disk space and monorepo workspaces, with a clear pick for small apps, teams and monorepos in 2026."
 publishedAt: "2026-10-20"
-image: "/images/gallery/horizontal-2.jpg"
+updatedAt: "2026-11-02"
+image: "/images/blog/pnpm-vs-npm-vs-yarn-vs-bun.jpg"
+imageAlt: "pnpm vs npm vs Yarn vs Bun: JavaScript package managers compared on speed, disk space, performance and workspaces"
 tag: "JavaScript"
+keywords:
+  - pnpm vs npm
+  - pnpm vs npm vs yarn vs bun
+  - bun vs npm
+  - yarn vs pnpm
+  - javascript package manager
+  - best package manager 2026
+  - pnpm workspaces
+  - monorepo
 ---
+
+**pnpm vs npm vs Yarn vs Bun** is one of the first choices you make on a new JavaScript project. All four install the same packages from the same registry, but they differ in speed, disk usage, strictness and how well they handle monorepos.
+
+Here is the short answer:
+
+- **Bun** is the fastest installer.
+- **pnpm** uses the least disk space and is the best fit for monorepos.
+- **npm** is the safest default, because it ships with Node.js.
+- **Yarn 4** is a good choice if your repo already uses it.
+
+The rest of this guide shows the numbers, how each one works, and when to pick which.
+
+## Quick comparison
+
+<Table
+    marginTop="8"
+    marginBottom="16"
+    data={{
+      headers: [
+        { content: "", key: "feature" },
+        { content: "npm", key: "npm" },
+        { content: "Yarn 4", key: "yarn" },
+        { content: "pnpm", key: "pnpm" },
+        { content: "Bun", key: "bun" }
+      ],
+      rows: [
+        ["Cold install (my test)", "~45 s", "~30 s", "~20 s", "~8 s"],
+        ["Disk usage", "Copy per project", "Zip cache (PnP)", "One global store, linked", "Copy per project"],
+        ["Strict dependencies", "No", "Yes (PnP)", "Yes", "No"],
+        ["Workspaces / monorepos", "Basic", "Good", "Excellent", "Good"],
+        ["Lockfile", "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lock"],
+        ["Installed with Node.js", "Yes", "Via Corepack", "Via Corepack", "No (own runtime)"]
+      ]
+    }}
+/>
 
 ## The speed test
 
@@ -66,6 +112,32 @@ The commands are familiar: you still have a `package.json` and a lockfile, and y
 
 Use Bun for new apps and scripts where you control the stack. Check it in CI before you switch a large existing app.
 
+## Same commands, four tools
+
+The everyday commands map almost one to one:
+
+<Table
+    marginTop="8"
+    marginBottom="16"
+    data={{
+      headers: [
+        { content: "Task", key: "task" },
+        { content: "npm", key: "npm" },
+        { content: "Yarn", key: "yarn" },
+        { content: "pnpm", key: "pnpm" },
+        { content: "Bun", key: "bun" }
+      ],
+      rows: [
+        ["Install all", "npm install", "yarn", "pnpm install", "bun install"],
+        ["Add a package", "npm install react", "yarn add react", "pnpm add react", "bun add react"],
+        ["Add a dev package", "npm install -D vitest", "yarn add -D vitest", "pnpm add -D vitest", "bun add -d vitest"],
+        ["Remove a package", "npm uninstall react", "yarn remove react", "pnpm remove react", "bun remove react"],
+        ["Run a script", "npm run dev", "yarn dev", "pnpm dev", "bun run dev"],
+        ["Run a CLI once", "npx create-next-app", "yarn dlx create-next-app", "pnpm dlx create-next-app", "bunx create-next-app"]
+      ]
+    }}
+/>
+
 ## What actually changes
 
 The lockfile is the important file in all four. Commit it. That is what makes the next install match the last one.
@@ -81,6 +153,30 @@ Scripts in `package.json` work the same way everywhere. `dev`, `build`, and `tes
 
 ## Moving a project
 
-Pick the manager, delete `node_modules`, remove the old lockfile, and install again. Read the new lockfile into git. If a dependency only works with npm, you will find out on that fresh install, not in production.
+Pick the manager, delete `node_modules`, remove the old lockfile, and install again. Commit the new lockfile to git. If a dependency only works with npm, you will find out on that fresh install, not in production.
 
 You do not need to migrate a project that already installs cleanly. The gain is real on big repos and on machines full of Node projects. On a single small app, npm is enough.
+
+Starting a new Next.js app? See [everything new in Next.js 16](/blog/everything-new-in-nextjs-16), and when it is ready to ship, compare [the best Next.js hosting platforms](/blog/best-8-deployment-hosting-nextjs).
+
+## FAQ
+
+### Is pnpm faster than npm?
+
+Yes. In my test on a Next.js project with about 100 dependencies, pnpm finished a cold install in about 20 seconds and npm in about 45 seconds. pnpm is even faster on later installs because packages are already in its global store.
+
+### Is Bun faster than pnpm?
+
+For installs, yes. Bun was the fastest of the four in my test, at about 8 seconds. pnpm still wins on disk space and on strict, well-organized monorepos.
+
+### Which package manager is best for a monorepo?
+
+pnpm. Its workspaces link shared dependencies instead of copying them, and its strict mode stops packages from importing things they did not declare.
+
+### Can I switch from npm to pnpm or Bun?
+
+Yes. Delete `node_modules` and `package-lock.json`, run `pnpm install` or `bun install`, and commit the new lockfile. Test the build and CI once before you merge.
+
+### Should I still use Yarn in 2026?
+
+If your project already uses Yarn 4, there is no need to move. For a new project, pnpm or Bun is usually the simpler choice.

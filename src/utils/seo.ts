@@ -9,6 +9,11 @@ type PageMetadataOptions = {
   image?: string;
   type?: "website" | "article";
   publishedTime?: string;
+  modifiedTime?: string;
+  keywords?: string[];
+  tags?: string[];
+  section?: string;
+  imageAlt?: string;
   noindex?: boolean;
 };
 
@@ -37,6 +42,11 @@ export function pageMetadata({
   image,
   type = "website",
   publishedTime,
+  modifiedTime,
+  keywords,
+  tags,
+  section,
+  imageAlt,
   noindex = false,
 }: PageMetadataOptions): Metadata {
   const canonical = siteUrl(path);
@@ -58,8 +68,14 @@ export function pageMetadata({
     alternates: [{ href: canonical, hrefLang: "en" }],
   });
 
+  const isArticle = type === "article";
+  const ogImages = (generated.openGraph?.images as Array<{ url: string }> | undefined)?.map(
+    (img) => ({ ...img, alt: imageAlt || title }),
+  );
+
   return {
     ...generated,
+    ...(keywords?.length ? { keywords } : {}),
     alternates: {
       canonical,
       types: {
@@ -68,10 +84,21 @@ export function pageMetadata({
     },
     openGraph: {
       ...generated.openGraph,
+      ...(ogImages ? { images: ogImages } : {}),
+      ...(isArticle
+        ? {
+            type: "article",
+            ...(publishedTime ? { publishedTime } : {}),
+            modifiedTime: modifiedTime || publishedTime,
+            authors: [siteUrl("/about")],
+            ...(section ? { section } : {}),
+            ...(tags?.length ? { tags } : {}),
+          }
+        : {}),
       url: canonical,
       siteName: person.name,
       locale: "en_US",
-    },
+    } as Metadata["openGraph"],
     robots: noindex
       ? { index: false, follow: true }
       : {

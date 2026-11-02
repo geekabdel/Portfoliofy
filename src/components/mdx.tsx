@@ -209,5 +209,13 @@ type CustomMDXProps = MDXRemoteProps & {
 };
 
 export function CustomMDX(props: CustomMDXProps) {
-  return <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />;
+  return (
+    <MDXRemote
+      {...props}
+      // next-mdx-remote v6 strips JS expressions (e.g. Table's data={{...}}) by default.
+      // Posts are local files we author, so allow them; blockDangerousJS stays on.
+      options={{ blockJS: false, ...props.options }}
+      components={{ ...components, ...(props.components || {}) }}
+    />
+  );
 }

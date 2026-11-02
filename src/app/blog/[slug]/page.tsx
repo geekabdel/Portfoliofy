@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { CustomMDX, ScrollToHash } from "@/components";
 import {
-  Schema,
   Column,
   Heading,
   HeadingNav,
@@ -12,7 +11,7 @@ import {
   Media,
   Line,
 } from "@once-ui-system/core";
-import { baseURL, about, blog, person } from "@/resources";
+import { about, blog, person } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
 import { getPosts } from "@/utils/utils";
 import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
@@ -47,8 +46,13 @@ export async function generateMetadata({
     description: post.metadata.summary,
     path: `${blog.path}/${post.slug}`,
     image: post.metadata.image,
+    imageAlt: post.metadata.imageAlt,
     type: "article",
     publishedTime: post.metadata.publishedAt,
+    modifiedTime: post.metadata.updatedAt,
+    keywords: post.metadata.keywords,
+    tags: post.metadata.keywords,
+    section: post.metadata.tag,
   });
 }
 
@@ -63,6 +67,55 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
   if (!post) {
     notFound();
   }
+
+  const postUrl = siteUrl(`${blog.path}/${post.slug}`);
+  const personId = `${siteUrl("/")}#person`;
+  const imageUrl = siteUrl(ogImage(post.metadata.title, post.metadata.image));
+  const wordCount = post.content
+    .replace(/<[^>]+>/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${postUrl}#article`,
+        headline: post.metadata.title,
+        description: post.metadata.summary,
+        url: postUrl,
+        mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+        image: {
+          "@type": "ImageObject",
+          url: imageUrl,
+          caption: post.metadata.imageAlt || post.metadata.title,
+        },
+        datePublished: post.metadata.publishedAt,
+        dateModified: post.metadata.updatedAt || post.metadata.publishedAt,
+        inLanguage: "en",
+        ...(post.metadata.tag ? { articleSection: post.metadata.tag } : {}),
+        ...(post.metadata.keywords.length ? { keywords: post.metadata.keywords.join(", ") } : {}),
+        wordCount,
+        author: {
+          "@type": "Person",
+          "@id": personId,
+          name: "Abdelhamid Maaidni",
+          url: siteUrl(about.path),
+          image: siteUrl(person.avatar),
+        },
+        publisher: { "@id": personId },
+        isPartOf: { "@id": `${siteUrl("/")}#website` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: siteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Blog", item: siteUrl(blog.path) },
+          { "@type": "ListItem", position: 3, name: post.metadata.title, item: postUrl },
+        ],
+      },
+    ],
+  };
 
   const avatars =
     post.metadata.team?.map((person) => ({
@@ -81,20 +134,9 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
           gap="l"
           paddingTop="24"
         >
-          <Schema
-            as="blogPosting"
-            baseURL={baseURL}
-            path={`${blog.path}/${post.slug}`}
-            title={post.metadata.title}
-            description={post.metadata.summary}
-            datePublished={post.metadata.publishedAt}
-            dateModified={post.metadata.publishedAt}
-            image={ogImage(post.metadata.title, post.metadata.image)}
-            author={{
-              name: person.name,
-              url: siteUrl(about.path),
-              image: siteUrl(person.avatar),
-            }}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
           />
           <Column className={styles.mobileFullWidth} maxWidth="s" gap="16" horizontal="center" align="center">
             <SmartLink href="/blog">
@@ -102,6 +144,9 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
             </SmartLink>
             <Text variant="body-default-xs" onBackground="neutral-weak" marginBottom="12">
               {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
+              {post.metadata.updatedAt &&
+                post.metadata.updatedAt !== post.metadata.publishedAt &&
+                ` · Updated ${formatDate(post.metadata.updatedAt)}`}
             </Text>
             <Heading variant="display-strong-m">{post.metadata.title}</Heading>
           </Column>
@@ -116,7 +161,7 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
           {post.metadata.image && (
             <Media
               src={post.metadata.image}
-              alt={post.metadata.title}
+              alt={post.metadata.imageAlt || post.metadata.title}
               aspectRatio="16/9"
               priority
               sizes="(min-width: 768px) 100vw, 768px"
