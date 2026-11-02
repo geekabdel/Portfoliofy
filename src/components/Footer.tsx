@@ -25,7 +25,7 @@ export const Footer = () => {
         style={{ position: 'relative', zIndex: 1 }}
       >
         <Text variant="body-default-s" onBackground="neutral-strong" align="center">
-          <Text onBackground="neutral-weak">© 2020 Abdelhamid Maaidni, All rights reserved.</Text>
+          <Text onBackground="neutral-weak">© 2026 Abdelhamid Maaidni, All rights reserved.</Text>
         </Text>
         <Row gap="16" style={{ position: 'relative', zIndex: 2 }}>
           {social.map(

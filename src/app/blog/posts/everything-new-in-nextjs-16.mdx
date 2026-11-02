@@ -1,18 +1,32 @@
 ---
-title: "Everything new in Next.js 16"
-summary: "Next.js 16 is now available, bringing Cache Components, Turbopack, and refined caching, now fully supported on Appwrite Sites."
+title: "What's New in Next.js 16: Cache Components, Turbopack and proxy.ts"
+summary: "Next.js 16 explained: Cache Components and use cache, Turbopack as the default bundler, proxy.ts replacing middleware, DevTools MCP, and how to upgrade."
 publishedAt: "2025-12-19"
+updatedAt: "2026-11-02"
 image: "/images/gallery/horizontal-2.jpg"
+imageAlt: "Everything new in Next.js 16: Cache Components, Turbopack and proxy.ts"
 tag: "Next.js"
+keywords:
+  - next.js 16
+  - what's new in next.js 16
+  - next.js 16 cache components
+  - use cache
+  - proxy.ts
+  - turbopack
+  - upgrade to next.js 16
 ---
 
-Next.js 16 is here, and it brings one of the most polished releases the framework has seen in a while. Instead of chasing big rewrites, this version focuses on the fundamentals, faster builds, predictable caching, smarter routing, and better developer visibility.
+**Next.js 16** is one of the most polished releases the framework has had in a while. Instead of chasing big rewrites, it focuses on the fundamentals: faster builds, predictable caching, clearer request handling, and better developer visibility.
 
-And if you're deploying on Appwrite Sites, you can start using Next.js 16 today. The latest release is fully supported, so you can build, test, and host your Next.js projects seamlessly on Appwrite's open-source infrastructure.
+The headline changes are:
 
-Many of the features introduced in earlier betas are now stable and production-ready, giving developers more control and consistency across their workflows.
+- **Cache Components** with the `use cache` directive, for explicit caching.
+- **Turbopack** as the default bundler, with 2–5× faster builds.
+- **proxy.ts**, which replaces `middleware.ts`.
+- **Next.js DevTools MCP**, so AI coding tools understand your app.
+- **Build Adapters** (alpha), for custom deployment targets.
 
-Here's what's new, what's changed, and why it matters for anyone building with Next.js today.
+This portfolio runs on Next.js 16, so everything below comes from real use, not just the release notes. Here is what is new, what changed, and why it matters.
 
 ## Cache Components
 
@@ -21,6 +35,32 @@ Caching in Next.js used to be a bit of a mystery. Sometimes your data was cached
 Next.js 16 fixes that by introducing **Cache Components**: A new, explicit caching model. Instead of Next.js deciding what to cache, you tell it what should be cached and when to revalidate.
 
 It's built on top of Partial Pre-rendering (PPR), which already blurred the line between static and dynamic pages. Together, they make rendering predictable and flexible.
+
+Turn it on in `next.config.ts`:
+
+```ts
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+};
+
+export default nextConfig;
+```
+
+Then add `"use cache"` to the page, component, or function you want cached. Everything else runs at request time by default:
+
+```tsx
+import { cacheLife } from "next/cache";
+
+export default async function BlogList() {
+  "use cache";
+  cacheLife("hours");
+
+  const posts = await getPosts();
+  return <PostList posts={posts} />;
+}
+```
 
 ## Next.js DevTools MCP
 
@@ -34,7 +74,18 @@ It's still early, but it points toward a future where your dev tools don't just 
 
 ## proxy.ts
 
-The old `middleware.ts` file is now `proxy.ts`. That's it. Same behaviour, better name.
+The old `middleware.ts` file is now `proxy.ts`, and the exported `middleware` function becomes `proxy`. It runs on the Node.js runtime, so the network boundary of your app is explicit.
+
+```ts
+// proxy.ts
+import { NextResponse, type NextRequest } from "next/server";
+
+export function proxy(request: NextRequest) {
+  if (!request.cookies.get("session")) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+}
+```
 
 There has been a lot of confusion around how middlewares work in Next.js. These middlewares are not your typical middlewares. You're at the mercy of any network calls you make in these middlewares, as a single slow network call may block the initial load of your entire webpage, which is not ideal. Middlewares in Next.js are used to do something lightweight, for example, redirecting users based on the authentication cookies stored. Since the term middleware continued to cause issues, the Next.js team finally decided to rename it to **proxy** so that the purpose of using it is clear.
 
@@ -62,6 +113,31 @@ If you've ever had to deploy a Next.js app in an unusual environment, say, outsi
 
 This update shows that Next.js is starting to take flexibility seriously for developers running the framework in different environments.
 
+## How to upgrade to Next.js 16
+
+Check the new minimum versions first: **Node.js 20.9 or later** (Node 18 is no longer supported) and **TypeScript 5.1 or later**.
+
+Then run the official codemod. It updates your dependencies, renames `middleware.ts` to `proxy.ts`, and fixes most breaking changes for you:
+
+```bash
+npx @next/codemod@canary upgrade latest
+```
+
+Or upgrade by hand:
+
+```bash
+npm install next@latest react@latest react-dom@latest
+```
+
+Breaking changes to review after the codemod:
+
+- `params`, `searchParams`, `cookies()` and `headers()` must be awaited.
+- `next lint` is removed. Run ESLint directly.
+- AMP support and the old runtime config are removed.
+- The `experimental.ppr` flag is replaced by `cacheComponents: true`.
+
+Run `npm run build` and fix what it reports before you deploy. If you are choosing where to deploy, see [the best Next.js hosting platforms in 2026](/blog/best-8-deployment-hosting-nextjs).
+
 ## Conclusion
 
 Next.js 16 represents a maturation of the framework, focusing on developer experience and stability rather than flashy new features. Several key improvements are available:
@@ -75,4 +151,26 @@ Next.js 16 represents a maturation of the framework, focusing on developer exper
 
 These improvements compound over time, making Next.js 16 a solid foundation for production applications. Evaluate your project's needs to take full advantage of these enhancements.
 
+Setting up a new Next.js 16 project? Pick your package manager first: [pnpm vs npm vs Yarn vs Bun](/blog/pnpm-vs-npm-vs-yarn-vs-bun).
 
+## FAQ
+
+### What is new in Next.js 16?
+
+Cache Components with `use cache`, Turbopack as the default bundler, `proxy.ts` replacing `middleware.ts`, Next.js DevTools MCP, better build logs, and the Build Adapters API in alpha.
+
+### What Node.js version does Next.js 16 need?
+
+Node.js 20.9 or later. Node.js 18 is no longer supported.
+
+### Is middleware.ts removed in Next.js 16?
+
+It is deprecated. Rename the file to `proxy.ts` and the exported function to `proxy`. The upgrade codemod does this for you.
+
+### How do I enable Cache Components?
+
+Set `cacheComponents: true` in `next.config.ts`, then add the `"use cache"` directive to the pages, components, or functions you want cached.
+
+### Is Turbopack the default in Next.js 16?
+
+Yes. Turbopack is stable and is now the default bundler for `next dev` and `next build`.

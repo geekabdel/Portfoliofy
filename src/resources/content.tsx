@@ -324,7 +324,7 @@ const blog: Blog = {
   label: "Blog",
   title: `Blog – ${person.name}`,
   description:
-    "Articles on building web and mobile apps with Next.js, React, Laravel, and Flutter, covering deployment, hosting, and shipping real client work.",
+    "Practical guides on Next.js, JavaScript tooling, hosting and web security, from Next.js 16 and pnpm vs Bun to Next.js hosting and monthly CVE reports.",
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
 };

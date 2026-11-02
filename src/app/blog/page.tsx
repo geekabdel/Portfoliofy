@@ -3,7 +3,7 @@ import { Posts } from "@/components/blog/Posts";
 import { baseURL, blog, person, about } from "@/resources";
 import { ogImage, pageMetadata, siteUrl } from "@/utils/seo";
 
-const metaTitle = "Blog | Abdelhamid Maaidni on Next.js and Web Development";
+const metaTitle = "Blog: Next.js, JavaScript & Web Security Guides | Abdelhamid Maaidni";
 
 export async function generateMetadata() {
   return pageMetadata({
